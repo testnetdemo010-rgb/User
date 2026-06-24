@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🛒 Grocery Shop · City Only</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',Roboto,Arial,sans-serif;padding:12px;background:#f5f7fa}
+        .card{background:#fff;border:1px solid #e0e4e8;border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.02)}
+        button{padding:8px 16px;border:none;background:#2a7de1;color:#fff;border-radius:30px;cursor:pointer;font-weight:600;font-size:13px;transition:all .15s;letter-spacing:.2px}
+        button:hover{opacity:.85;transform:scale(.97)}
+        button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+        .cancel{background:#d93c3c}
+        .checkout{background:#0b7e3d}
+        input{width:100%;padding:10px 12px;border:1px solid #d0d7dd;border-radius:30px;font-size:13px;background:#fafcff}
+        input:disabled{background:#f0f2f5;color:#1f2a3a;border-color:#c5cdd8;cursor:not-allowed}
+        #loginPopup{position:fixed;right:16px;bottom:16px;background:#fff;border:1px solid #dce2ea;border-radius:20px;padding:18px 22px;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+        .status-timeline{display:flex;gap:4px;margin:8px 0 4px;padding:4px 2px;background:#f2f6fc;border-radius:40px;flex-wrap:wrap}
+        .status-step{flex:1;text-align:center;padding:4px 2px;border-radius:30px;background:#e4e9f0;color:#4a5568;font-size:11px;font-weight:500;min-width:50px}
+        .status-step.active{background:#1f8b4c;color:#fff}
+        .status-step.completed{background:#2a7de1;color:#fff}
+        .ok{color:#1f8b4c;font-weight:700}
+        .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+        .product-card{background:#fff;border:1px solid #e6ecf3;border-radius:16px;padding:12px 6px;text-align:center;cursor:pointer;transition:all .15s}
+        .product-card:hover{border-color:#2a7de1;background:#f8fbff}
+        .total-amount{font-size:22px;font-weight:700;color:#0b4f2c}
+        .orders-tabs{display:flex;gap:2px;margin:12px 0 0;border-bottom:2px solid #dce2ea;flex-wrap:wrap}
+        .tab-btn{padding:8px 16px;background:#f0f4fa;border:none;border-radius:20px 20px 0 0;cursor:pointer;font-weight:600;font-size:13px;color:#2c3e50;transition:.15s;margin-right:1px}
+        .tab-btn:hover{background:#e3eaf3}
+        .tab-btn.active{background:#fff;color:#1a5fc7;border:1px solid #dce2ea;border-bottom:2px solid #fff;position:relative;bottom:-2px}
+        .tab-btn .badge{background:#dce8f8;color:#1a5fc7;padding:1px 10px;border-radius:30px;font-size:10px;margin-left:6px}
+        .tab-content{display:none}
+        .tab-content.active{display:block}
+        .orders-container{background:#fafcff;border-radius:0 0 16px 16px;padding:8px 4px;border:1px solid #dce2ea;border-top:none}
+        #checkoutForm{display:none;background:#fff;padding:16px;border-radius:20px;margin-top:12px;border:1px solid #e0e8f0;max-width:650px}
+        .form-label{font-weight:600;font-size:13px;color:#1f2a3a;margin-bottom:4px;display:block}
+        .form-row{margin-bottom:10px}
+        .form-row input{width:100%}
+        .address-label-text{font-weight:600;font-size:13px;color:#1f2a3a;margin-bottom:4px;display:block}
+        .address-input-row{display:flex;flex-direction:column;gap:6px}
+        .address-choice-buttons{display:flex;gap:6px;flex-wrap:wrap}
+        .address-choice-buttons button{flex:1;min-width:100px;padding:10px 14px}
+        .address-choice-buttons .auto-btn{background:#28a745}
+        .address-choice-buttons .manual-btn{background:#1a5fc7}
+        #autoAddressGroup{display:none;width:100%;gap:6px;align-items:center;flex-wrap:wrap}
+        #autoAddressGroup input{flex:1;min-width:120px;background:#f5f6f8;border-color:#d0d7dd;cursor:default}
+        #autoAddressGroup .addr-actions{display:flex;gap:4px}
+        #autoAddressGroup .addr-actions button{padding:8px 12px;font-size:12px;white-space:nowrap}
+        .clear-addr-btn{background:#dc3545}
+        .change-addr-btn{background:#6c757d}
+        #manualAddressFields{display:none;width:100%;gap:6px;flex-wrap:wrap;align-items:center}
+        #manualAddressFields input{flex:1;min-width:80px}
+        #manualAddressFields input#manualCity{flex:.5;min-width:70px;background:#e9ecef;color:#495057}
+        #manualAddressFields input#manualArea{flex:1.5;min-width:100px}
+        #manualAddressFields input#manualStreet{flex:1.5;min-width:100px}
+        #manualAddressFields .manual-actions{display:flex;gap:4px;flex-wrap:wrap}
+        #manualAddressFields .manual-actions button{padding:8px 14px}
+        .manual-save-btn{background:#28a745}
+        .manual-cancel-btn{background:#6c757d}
+        .address-status-line{font-size:11px;color:#6c7a8a;margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+        .status-badge{display:inline-block;padding:2px 12px;border-radius:30px;font-size:11px;font-weight:500;background:#eef4fa;color:#2d4b6e}
+        .status-badge.saved{background:#d4edda;color:#155724}
+        .status-badge.loading{background:#fff3cd;color:#856404}
+        .status-badge.denied{background:#f8d7da;color:#721c24}
+        .status-badge.countdown{background:#fff3cd;color:#856404;animation:pulse 1s infinite}
+        @keyframes pulse{0%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(.97)}100%{opacity:1;transform:scale(1)}}
+        .saved-as-section{margin-top:8px;display:none}
+        .saved-as-section .saved-as-title{font-size:12px;color:#6c7a8a;font-weight:500;margin-right:6px}
+        .saved-as-section .label-btns{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:2px}
+        .label-btn{padding:4px 14px;border-radius:30px;border:2px solid #d0d7dd;background:#fff;cursor:pointer;font-size:12px;font-weight:500;transition:all .2s;color:#2d4b6e}
+        .label-btn:hover{border-color:#1a5fc7;background:#f0f6ff}
+        .label-btn.active-home{border-color:#28a745;background:#28a745;color:#fff}
+        .label-btn.active-office{border-color:#ff9800;background:#ff9800;color:#fff}
+        .label-btn.active-none{border-color:#1a5fc7;background:#1a5fc7;color:#fff}
+        .saved-addresses-list{margin-top:6px}
+        .saved-addr-item{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#f8f9fa;border-radius:30px;margin-bottom:4px;border:1px solid #e0e4e8}
+        .saved-addr-item .addr-label-tag{font-weight:600;font-size:11px;min-width:36px;padding:1px 8px;border-radius:16px;text-align:center}
+        .saved-addr-item .addr-label-tag.home{background:#d4edda;color:#155724}
+        .saved-addr-item .addr-label-tag.office{background:#fff3cd;color:#856404}
+        .saved-addr-item .addr-text{flex:1;font-size:12px;color:#2d4b6e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .saved-addr-item .addr-actions{display:flex;gap:3px}
+        .saved-addr-item .addr-actions button{padding:3px 10px;font-size:10px;margin:0}
+        .use-addr-btn{background:#28a745}
+        .del-addr-btn{background:#dc3545}
+        .no-saved-msg{color:#6c7a8a;font-size:12px;padding:4px 0}
+        .order-btn{width:100%;margin-top:12px;padding:12px;font-size:15px;background:#b0b8c0;color:#6c7a8a;cursor:not-allowed;transition:all .3s;border-radius:30px;border:none;font-weight:700}
+        .order-btn.ready{background:#0b7e3d;color:#fff;cursor:pointer;animation:glow 1.5s ease-in-out infinite}
+        .order-btn.ready:hover{opacity:.85;transform:scale(.98)}
+        @keyframes glow{0%{box-shadow:0 0 0 0 rgba(11,126,61,.4)}70%{box-shadow:0 0 12px 8px rgba(11,126,61,.1)}100%{box-shadow:0 0 0 0 rgba(11,126,61,0)}}
+        .phone-boxes{display:flex;gap:2px;flex-wrap:wrap;align-items:center}
+        .phone-boxes input.phone-digit{width:28px;height:36px;text-align:center;font-size:16px;font-weight:600;padding:0;border:2px solid #dce2ea;border-radius:6px;background:#f8faff;transition:all .2s;flex:0 0 auto;color:#1f2a3a}
+        .phone-boxes input.phone-digit:focus{border-color:#4a8af4;box-shadow:0 0 0 3px rgba(42,125,225,.15);outline:none;background:#fff}
+        .phone-boxes input.phone-digit.filled{border-color:#7ab7f0;background:rgba(42,125,225,.08);color:#1a5fc7}
+        .phone-boxes input.phone-digit.filled:focus{border-color:#4a8af4;background:rgba(42,125,225,.12)}
+        .phone-boxes input.phone-digit.permanent{background:rgba(42,125,225,.08);color:#1a5fc7;border-color:#7ab7f0;cursor:default;font-weight:700}
+        .phone-boxes input.phone-digit.error{border-color:#dc3545;background:#fff5f5}
+        .phone-boxes .phone-dash{display:flex;align-items:center;font-size:18px;font-weight:300;color:#aab3c0;padding:0 1px;margin:0 1px}
+        .name-edit-wrapper{display:flex;align-items:center;gap:8px}
+        .name-edit-wrapper input{flex:1}
+        .name-edit-wrapper .edit-hint{font-size:11px;color:#6c7a8a;white-space:nowrap}
+        .name-edit-wrapper .form-label{margin-bottom:0;white-space:nowrap}
+        .phone-inline-wrapper{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+        .phone-inline-wrapper .phone-label{font-weight:600;font-size:13px;color:#1f2a3a;white-space:nowrap}
+        .phone-inline-wrapper .phone-boxes{flex:1;min-width:160px}
+        .phone-inline-wrapper .phone-hint{font-size:11px;color:#6c7a8a;white-space:nowrap}
+        .category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+        .category-box{background:#fff;border:2px solid #e6ecf3;border-radius:20px;padding:16px 6px;text-align:center;cursor:pointer;transition:all .15s;box-shadow:0 1px 4px rgba(0,0,0,.01)}
+        .category-box:hover{border-color:#2a7de1;background:#f8fbff;transform:translateY(-1px)}
+        .category-box h3{font-size:15px;color:#1f2a3a}
+        .category-box .sub{font-size:11px;color:#6c7a8a;margin-top:2px}
+        @media(max-width:650px){.category-grid{grid-template-columns:repeat(2,1fr)}
+        .address-choice-buttons{flex-direction:column}
+        #autoAddressGroup input{min-width:100%}
+        #manualAddressFields input{min-width:100%!important;flex:1 1 100%!important}
+        .saved-addr-item{flex-wrap:wrap}
+        .saved-addr-item .addr-text{white-space:normal;width:100%}
+        .phone-boxes input.phone-digit{width:24px;height:32px;font-size:14px}
+        .phone-boxes{gap:2px}
+        .phone-boxes .phone-dash{font-size:15px;padding:0 1px;margin:0 1px}
+        .phone-inline-wrapper{flex-direction:column;align-items:stretch;gap:4px}
+        .name-edit-wrapper{flex-wrap:wrap}}
+    </style>
+</head>
+<body>
+<div id="loginPopup"><h3 style="margin-bottom:8px;">🔑 Login</h3><button id="popupLoginBtn" style="background:#1a5fc7;">Login With Google</button></div>
+<h1 style="display:flex;align-items:center;gap:6px;font-size:22px;">🛒 Grocery Shop</h1>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 8px;">
+    <button id="loginBtn" style="background:#1a5fc7;">Login</button>
+    <button id="logoutBtn" style="background:#d93c3c;">Logout</button>
+    <h3 id="userInfo" style="font-weight:400;color:#2d4b6e;margin-left:4px;font-size:16px;">Not Logged In</h3>
+</div>
+<hr style="margin:8px 0;">
+<div id="customerArea">
+    <div id="categories"></div>
+    <div id="productsSection" style="display:none;">
+        <button onclick="showCategories()">⬅ Back</button>
+        <h2 id="categoryTitle" style="font-size:18px;"></h2>
+        <div id="products" class="product-grid"></div>
+    </div>
+    <hr style="margin:10px 0;">
+    <h2 style="font-size:18px;">🛒 Cart</h2>
+    <div id="cart"></div>
+    <h3 style="font-size:16px;">Total: <span id="total" class="total-amount">$0</span></h3>
+    <button id="checkoutBtn" class="checkout">Proceed Checkout</button>
+    <div id="checkoutForm">
+        <h2 style="margin-bottom:10px;font-size:18px;">📝 Details</h2>
+        <div class="form-row"><div class="name-edit-wrapper"><span class="form-label">Name</span><input type="text" id="name" placeholder="اپنا نام لکھے"><span class="edit-hint">✏️</span></div></div>
+        <div class="form-row"><div class="phone-inline-wrapper"><span class="phone-label">Phone</span><div class="phone-boxes" id="phoneContainer"></div><span class="phone-hint">🔢 03-xxxxxxx</span></div></div>
+        <div class="form-row"><label class="address-label-text">Address</label><div class="address-input-row">
+            <div class="address-choice-buttons" id="addressChoice"><button class="auto-btn" id="autoAddressBtn">📍 Click</button><button class="manual-btn" id="manualChoiceBtn">✏️ Manual</button></div>
+            <div id="autoAddressGroup"><input type="text" id="address" placeholder="Address" disabled><div class="addr-actions"><button class="clear-addr-btn" id="clearAddressBtn">✖</button><button class="change-addr-btn" id="changeAddressBtn">↻</button></div></div>
+            <div id="manualAddressFields"><input type="text" id="manualCity" value="Fort Abbas" readonly><input type="text" id="manualArea" placeholder="ٹاؤن"><input type="text" id="manualStreet" placeholder="گلی"><div class="manual-actions"><button class="manual-save-btn" id="manualSaveBtn">✅ Save</button><button class="manual-cancel-btn" id="manualCancelBtn">✖</button></div></div>
+        </div><div class="address-status-line"><span class="status-badge" id="statusBadge">📍 Not set</span><span id="statusMessage">Select method</span></div></div>
+        <div class="saved-as-section" id="savedAsSection"><div class="saved-as-title">Saved As</div><div class="label-btns"><button class="label-btn active-none" data-label="None">None</button><button class="label-btn" data-label="Home">🏠 Home</button><button class="label-btn" data-label="Office">🏢 Office</button></div></div>
+        <div class="saved-addresses-list" id="savedAddressesList"><div class="no-saved-msg" id="noSavedMsg">No saved addresses</div></div>
+        <button class="order-btn" id="placeOrderBtn">📦 Order</button>
+    </div>
+    <hr>
+    <h2 style="font-size:18px;">📋 My Orders</h2>
+    <div class="orders-tabs"><button class="tab-btn active" data-tab="currentTab">🟢 Current <span class="badge">Pending/Packed/Picked</span></button><button class="tab-btn" data-tab="historyTab">📜 History <span class="badge">Delivered/Cancelled</span></button></div>
+    <div class="orders-container"><div id="currentTab" class="tab-content active"><div id="currentOrders"></div></div><div id="historyTab" class="tab-content"><div id="historyOrders"></div></div></div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getFirestore,collection,addDoc,updateDoc,doc,query,where,limit,getDocs,onSnapshot}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import{getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+const firebaseConfig={apiKey:"AIzaSyCXSNe9nwJndCLVwVGZYbP_1sOkq5-K_40",authDomain:"myorder1-login.firebaseapp.com",projectId:"myorder1-login",storageBucket:"myorder1-login.firebasestorage.app",messagingSenderId:"908669646736",appId:"1:908669646736:web:bcd16ca186160ae308e515"};
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);const auth=getAuth(app);const provider=new GoogleAuthProvider();
+let currentUser=null;let cart=[];let unsubscribeCustomer=null;let savedLocation=null;let selectedLabel='None';let isAddressLocked=false;let isCountdownActive=false;
+const categoryData=[{name:"Grocery",sub:"Oil,Ghee,Sugar",boxes:[{label:"🛢️ Oil & Ghee",items:[{name:"Sultan Ghee 1kg",price:4.5},{name:"Sunflower Oil 1L",price:3.2},{name:"Olive Oil 500ml",price:5.0},{name:"Cooking Oil 3L",price:8.0}]},{label:"🍬 Sugar & Gur",items:[{name:"Sugar 1kg",price:1.2},{name:"Brown Sugar 500g",price:1.8},{name:"Gur 1kg",price:2.5},{name:"Honey 500g",price:4.0}]},{label:"🌾 Flour & Grains",items:[{name:"White Flour 5kg",price:3.0},{name:"Whole Wheat 5kg",price:3.5},{name:"Rice Basmati 1kg",price:2.2},{name:"Oats 1kg",price:2.0}]},{label:"🧂 Spices",items:[{name:"Salt 1kg",price:.8},{name:"Black Pepper 100g",price:1.5},{name:"Turmeric 100g",price:1.0},{name:"Cumin 100g",price:1.2}]}]},{name:"Snacks & Drinks",sub:"Chips,Drinks,Biscuits",boxes:[{label:"🥤 Cold Drinks",items:[{name:"Pepsi 1.5L",price:1.5},{name:"Coca-Cola 1.5L",price:1.5},{name:"Sprite 1.5L",price:1.5},{name:"Mtn Dew 1.5L",price:1.7}]},{label:"🍪 Biscuits",items:[{name:"Oreo 200g",price:2.0},{name:"Peek Freans 200g",price:1.8},{name:"Cake Rusk 200g",price:1.5},{name:"Glucose Biscuit",price:1.2}]},{label:"🍿 Chips",items:[{name:"Lays 60g",price:.9},{name:"Kurkure 60g",price:.9},{name:"Cheetos 60g",price:.9},{name:"Namkeen 200g",price:1.2}]},{label:"☕ Tea/Coffee",items:[{name:"Tea Bag 25ct",price:1.8},{name:"Loose Tea 250g",price:2.5},{name:"Coffee 100g",price:3.0},{name:"Green Tea 20ct",price:2.2}]}]},{name:"Beauty & Care",sub:"Shampoo,Soap,Skincare",boxes:[{label:"🧴 Shampoo",items:[{name:"Pantene 500ml",price:4.5},{name:"Dove Conditioner",price:4.0},{name:"Head & Shoulders",price:5.0},{name:"Sunsilk 400ml",price:3.5}]},{label:"🧼 Soap",items:[{name:"Dove Soap 100g",price:1.8},{name:"Lifebuoy 125g",price:1.2},{name:"Lux Soap 125g",price:1.5},{name:"Body Wash 500ml",price:4.0}]},{label:"🪥 Oral",items:[{name:"Colgate Toothpaste",price:2.0},{name:"Sensodyne",price:3.0},{name:"Toothbrush 2pk",price:1.5},{name:"Mouthwash 500ml",price:3.5}]},{label:"💄 Skincare",items:[{name:"Face Wash 150ml",price:3.5},{name:"Moisturizer 100ml",price:4.0},{name:"Deodorant 150ml",price:2.5},{name:"Sunscreen SPF50",price:5.0}]}]}];
+let allProducts=[];let productIdCounter=1;categoryData.forEach(cat=>{cat.boxes.forEach(box=>{box.items.forEach(item=>{allProducts.push({id:productIdCounter++,name:item.name,price:item.price,category:cat.name,boxLabel:box.label})})})});
+function renderCategories(){const c=document.getElementById('categories');c.innerHTML='';categoryData.forEach(cat=>{const t=document.createElement('h2');t.textContent=`🛍️ ${cat.name}`;t.style.marginTop='12px';t.style.fontSize='18px';c.appendChild(t);const g=document.createElement('div');g.className='category-grid';cat.boxes.forEach(box=>{const b=document.createElement('div');b.className='category-box';b.innerHTML=`<h3>${box.label}</h3><div class="sub">${box.items.length} items</div>`;b.addEventListener('click',()=>showBoxProducts(cat.name,box.label,box.items));g.appendChild(b)});c.appendChild(g)})}
+function showBoxProducts(cat,label,items){const s=document.getElementById('productsSection');const t=document.getElementById('categoryTitle');const p=document.getElementById('products');t.textContent=`${cat} → ${label}`;p.innerHTML='';items.forEach(item=>{const prod=allProducts.find(p=>p.name===item.name&&p.price===item.price);const id=prod?prod.id:Math.random().toString(36).substr(2,5);const card=document.createElement('div');card.className='product-card';card.innerHTML=`<h3 style="font-size:14px;">${item.name}</h3><p style="font-size:13px;">$${item.price.toFixed(2)}</p><button onclick="window.addToCartById(${id})" style="padding:6px 14px;font-size:12px;">➕ Add</button>`;p.appendChild(card);if(!window.addToCartById){window.addToCartById=function(id){const product=allProducts.find(p=>p.id===id);if(!product)return;const existing=cart.find(item=>item.id===id);if(existing)existing.qty+=1;else cart.push({...product,qty:1});renderCart()}}});s.style.display='block';document.getElementById('categories').style.display='none'}
+window.showCategories=function(){document.getElementById('productsSection').style.display='none';document.getElementById('categories').style.display='block'};
+function renderCart(){const c=document.getElementById('cart');c.innerHTML='';let total=0;cart.forEach(item=>{total+=item.price*item.qty;const d=document.createElement('div');d.className='card';d.innerHTML=`<h3 style="font-size:14px;">${item.name}</h3><p style="font-size:12px;">Qty: ${item.qty}</p><p style="font-size:12px;">$${(item.price*item.qty).toFixed(2)}</p>`;c.appendChild(d)});document.getElementById('total').textContent=`$${total.toFixed(2)}`}
+function getPhoneDigits(){const inputs=document.querySelectorAll('.phone-digit');let digits='';inputs.forEach(inp=>{const val=inp.value.trim();if(val&&/^[0-9]$/.test(val))digits+=val;else digits+=' '});return digits}
+function getPhoneNumber(){const digits=getPhoneDigits();return digits.replace(/\s/g,'')}
+function setPhoneNumber(num){const inputs=document.querySelectorAll('.phone-digit');const digits=num.replace(/\D/g,'').slice(0,11);inputs.forEach((inp,i)=>{if(i<2)return;const val=digits[i]||'';inp.value=val;inp.classList.toggle('filled',!!val)});updateOrderButton()}
+function initPhoneBoxes(){const container=document.getElementById('phoneContainer');container.innerHTML='';const permValues=['0','3'];for(let i=0;i<2;i++){const inp=document.createElement('input');inp.type='text';inp.className='phone-digit permanent filled';inp.value=permValues[i];inp.disabled=true;inp.dataset.index=i;container.appendChild(inp)}for(let i=2;i<11;i++){const inp=document.createElement('input');inp.type='text';inp.maxLength=1;inp.inputMode='numeric';inp.pattern='[0-9]';inp.className='phone-digit';inp.dataset.index=i;inp.autocomplete='off';container.appendChild(inp)}const allInputs=container.querySelectorAll('.phone-digit');const dash=document.createElement('span');dash.className='phone-dash';dash.textContent='—';if(allInputs.length>=4){allInputs[3].parentNode.insertBefore(dash,allInputs[4])}const inputs=container.querySelectorAll('.phone-digit:not(.permanent)');inputs.forEach((inp,idx)=>{const actualIdx=idx+2;inp.addEventListener('input',function(e){const val=this.value;if(val&&!/^[0-9]$/.test(val)){this.value='';return}this.classList.toggle('filled',!!this.value);if(this.value&&actualIdx<10){const nextEditable=inputs[idx+1];if(nextEditable)nextEditable.focus()}updateOrderButton();savePhoneToStorage()});inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!this.value){if(actualIdx>2){const prevEditable=inputs[idx-1];if(prevEditable){prevEditable.focus();prevEditable.value='';prevEditable.classList.remove('filled');updateOrderButton();savePhoneToStorage();e.preventDefault()}}else{const permBox=container.querySelectorAll('.phone-digit.permanent')[1];if(permBox)permBox.focus();e.preventDefault()}}if(e.key==='ArrowLeft'){if(actualIdx>2){const prevEditable=inputs[idx-1];if(prevEditable){prevEditable.focus();e.preventDefault()}}else{const permBox=container.querySelectorAll('.phone-digit.permanent')[1];if(permBox){permBox.focus();e.preventDefault()}}}if(e.key==='ArrowRight'&&actualIdx<10){const nextEditable=inputs[idx+1];if(nextEditable){nextEditable.focus();e.preventDefault()}}});inp.addEventListener('paste',function(e){e.preventDefault();const paste=(e.clipboardData||window.clipboardData).getData('text');const digits=paste.replace(/\D/g,'').slice(0,11);if(!digits)return;const remaining=inputs.length-idx;const toPaste=digits.slice(0,remaining);for(let i=0;i<toPaste.length;i++){const targetIdx=idx+i;if(targetIdx<inputs.length){inputs[targetIdx].value=toPaste[i]||'';inputs[targetIdx].classList.toggle('filled',!!inputs[targetIdx].value)}}const nextIdx=Math.min(idx+toPaste.length,inputs.length-1);if(nextIdx<inputs.length)inputs[nextIdx].focus();updateOrderButton();savePhoneToStorage()});inp.addEventListener('focus',function(){this.select()})});loadPhoneFromStorage()}
+function savePhoneToStorage(){if(!currentUser)return;const phone=getPhoneNumber();if(phone)localStorage.setItem(`user_phone_${currentUser.uid}`,phone)}
+function loadPhoneFromStorage(){if(!currentUser)return;const saved=localStorage.getItem(`user_phone_${currentUser.uid}`);if(saved){const num=saved.replace(/\D/g,'');if(num.length===11)setPhoneNumber(num)}}
+function loadUserData(){if(!currentUser)return;const savedName=localStorage.getItem(`user_name_${currentUser.uid}`);if(savedName)document.getElementById('name').value=savedName;loadPhoneFromStorage();updateOrderButton()}
+function saveUserData(){if(!currentUser)return;const name=document.getElementById('name').value.trim();if(name)localStorage.setItem(`user_name_${currentUser.uid}`,name);savePhoneToStorage();updateOrderButton()}
+document.getElementById('name').addEventListener('input',saveUserData);
+function getSavedAddresses(){if(!currentUser)return[];const data=localStorage.getItem(`saved_addresses_${currentUser.uid}`);return data?JSON.parse(data):[]}
+function saveAddressToStorage(address,label){if(!currentUser||!address.trim())return;const addresses=getSavedAddresses();const existing=addresses.find(a=>a.address===address);if(existing){existing.label=label}else{addresses.push({address,label,id:Date.now()})}localStorage.setItem(`saved_addresses_${currentUser.uid}`,JSON.stringify(addresses));renderSavedAddresses()}
+function deleteAddressFromStorage(id){if(!currentUser)return;let addresses=getSavedAddresses();addresses=addresses.filter(a=>a.id!==id);localStorage.setItem(`saved_addresses_${currentUser.uid}`,JSON.stringify(addresses));renderSavedAddresses()}
+function renderSavedAddresses(){const container=document.getElementById('savedAddressesList');const noMsg=document.getElementById('noSavedMsg');const addresses=getSavedAddresses();const items=container.querySelectorAll('.saved-addr-item');items.forEach(el=>el.remove());if(addresses.length===0){noMsg.style.display='block';return}noMsg.style.display='none';addresses.forEach(addr=>{const div=document.createElement('div');div.className='saved-addr-item';const labelClass=addr.label==='Home'?'home':addr.label==='Office'?'office':'';div.innerHTML=`<span class="addr-label-tag ${labelClass}">${addr.label||'📍'}</span><span class="addr-text">${addr.address}</span><div class="addr-actions"><button class="use-addr-btn" data-id="${addr.id}">Use</button><button class="del-addr-btn" data-id="${addr.id}">✕</button></div>`;container.appendChild(div);div.querySelector('.use-addr-btn').addEventListener('click',(e)=>{e.stopPropagation();setAddress(addr.address,addr.label)});div.querySelector('.del-addr-btn').addEventListener('click',(e)=>{e.stopPropagation();if(confirm('Delete?'))deleteAddressFromStorage(addr.id)})})}
+function updateStatus(badgeText,badgeClass,message){const badge=document.getElementById('statusBadge');const msg=document.getElementById('statusMessage');badge.textContent=badgeText;badge.className='status-badge '+badgeClass;if(message)msg.textContent=message}
+function updateLabelButtons(){const btns=document.querySelectorAll('.label-btn');btns.forEach(btn=>{btn.className='label-btn';const label=btn.dataset.label;if(label===selectedLabel){if(label==='Home')btn.classList.add('active-home');else if(label==='Office')btn.classList.add('active-office');else btn.classList.add('active-none')}})}
+function setAddress(address,label=null){const input=document.getElementById('address');input.value=address;input.disabled=true;isAddressLocked=true;savedLocation={area:address};document.getElementById('addressChoice').style.display='none';document.getElementById('autoAddressGroup').style.display='flex';document.getElementById('manualAddressFields').style.display='none';if(label){selectedLabel=label;updateLabelButtons()}updateStatus('✅ Address saved','saved',`Address: ${address}`);document.getElementById('savedAsSection').style.display='block';updateOrderButton()}
+function clearAddress(resetView=true){const input=document.getElementById('address');input.value='';input.disabled=true;isAddressLocked=false;savedLocation=null;document.getElementById('manualArea').value='';document.getElementById('manualStreet').value='';if(resetView){document.getElementById('addressChoice').style.display='flex';document.getElementById('autoAddressGroup').style.display='none';document.getElementById('manualAddressFields').style.display='none'}updateStatus('📍 Not set','','Select method');document.getElementById('savedAsSection').style.display='none';updateOrderButton()}
+async function reverseGeocode(lat,lng){try{const resp=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1&zoom=18`);if(!resp.ok)throw new Error('Geocoding failed');const data=await resp.json();if(data&&data.display_name){const addr=data.address||{};let city=addr.city||addr.town||addr.village||addr.hamlet||'';if(!city)city=addr.suburb||addr.neighbourhood||'';if(!city)city=addr.municipality||addr.county||'';if(city)return`${city} (${lat.toFixed(5)}, ${lng.toFixed(5)})`;const parts=data.display_name.split(',');if(parts.length>=2)return`${parts[1].trim()} (${lat.toFixed(5)}, ${lng.toFixed(5)})`;return`${parts[0]?.trim()||'Location'} (${lat.toFixed(5)}, ${lng.toFixed(5)})`}return`Location (${lat.toFixed(5)}, ${lng.toFixed(5)})`}catch(e){return`Location (${lat.toFixed(5)}, ${lng.toFixed(5)})`}}
+function startAutoAddress(){if(isCountdownActive)return;if(!currentUser){alert("Please login first");return}document.getElementById('addressChoice').style.display='none';updateStatus('⏳ Getting location...','loading','Requesting...');if(!navigator.geolocation){alert('Geolocation not supported');updateStatus('❌ Not supported','denied','Not available');document.getElementById('addressChoice').style.display='flex';return}const input=document.getElementById('address');input.value='Fetching...';input.disabled=true;document.getElementById('autoAddressGroup').style.display='flex';document.getElementById('manualAddressFields').style.display='none';navigator.geolocation.getCurrentPosition(async(pos)=>{const{latitude,longitude}=pos.coords;const address=await reverseGeocode(latitude,longitude);setAddress(address);if(selectedLabel!=='None')saveAddressToStorage(address,selectedLabel);renderSavedAddresses()},(err)=>{if(err.code===1)updateStatus('⚠️ Permission denied','denied','Allow location');else updateStatus('❌ Error','denied','Try Manual');document.getElementById('addressChoice').style.display='flex';document.getElementById('autoAddressGroup').style.display='none';document.getElementById('address').value='';updateOrderButton()},{enableHighAccuracy:true,timeout:10000,maximumAge:60000})}
+function showManualFields(){if(!currentUser){alert("Please login first");return}document.getElementById('addressChoice').style.display='none';document.getElementById('autoAddressGroup').style.display='none';document.getElementById('manualAddressFields').style.display='flex';updateStatus('✏️ Enter Address','loading','لکھیں');document.getElementById('savedAsSection').style.display='none'}
+function saveManualAddress(){const city=document.getElementById('manualCity').value.trim();const area=document.getElementById('manualArea').value.trim();const street=document.getElementById('manualStreet').value.trim();if(!area||!street){alert("براہ کرم ٹاؤن اور گلی لکھیں");return}const fullAddress=`${city}, ${area}, ${street}`;setAddress(fullAddress);if(selectedLabel!=='None'){saveAddressToStorage(fullAddress,selectedLabel);renderSavedAddresses()}}
+function cancelManual(){document.getElementById('manualAddressFields').style.display='none';document.getElementById('addressChoice').style.display='flex';document.getElementById('manualArea').value='';document.getElementById('manualStreet').value='';updateStatus('📍 Cancelled','','Manual cancelled');updateOrderButton()}
+function changeAddress(){clearAddress(true)}
+function updateOrderButton(){const name=document.getElementById('name').value.trim();const phone=getPhoneNumber();const address=document.getElementById('address').value.trim();const btn=document.getElementById('placeOrderBtn');if(name&&phone.length===11&&address){btn.classList.add('ready');btn.disabled=false}else{btn.classList.remove('ready');btn.disabled=true}}
+document.querySelectorAll('.label-btn').forEach(btn=>{btn.addEventListener('click',function(){const label=this.dataset.label;if(label==='None'){selectedLabel='None';updateLabelButtons();return}selectedLabel=label;updateLabelButtons();const address=document.getElementById("address").value.trim();if(address)saveAddressToStorage(address,label);updateStatus('✅ Address Done','saved',`Saved as "${label}"`)})});
+document.getElementById('autoAddressBtn').addEventListener('click',startAutoAddress);
+document.getElementById('manualChoiceBtn').addEventListener('click',showManualFields);
+document.getElementById('manualSaveBtn').addEventListener('click',saveManualAddress);
+document.getElementById('manualCancelBtn').addEventListener('click',cancelManual);
+document.getElementById('clearAddressBtn').addEventListener('click',()=>clearAddress(true));
+document.getElementById('changeAddressBtn').addEventListener('click',changeAddress);
+document.getElementById("checkoutBtn").onclick=()=>{if(!currentUser){alert("Please Login");return}if(cart.length===0){alert("Cart Empty");return}document.getElementById("checkoutForm").style.display="block";loadUserData();renderSavedAddresses();clearAddress(true);document.getElementById('savedAsSection').style.display='none';updateOrderButton()};
+document.getElementById("placeOrderBtn").onclick=async()=>{if(document.getElementById("placeOrderBtn").disabled){alert("Please complete all details");return}try{const name=document.getElementById("name").value.trim();const phone=getPhoneNumber();let address=document.getElementById("address").value.trim();if(!name||phone.length!==11||!address){alert("Fill all details");return}saveUserData();if(selectedLabel!=='None'&&address)saveAddressToStorage(address,selectedLabel);let total=0;cart.forEach(item=>{total+=item.price*item.qty});await addDoc(collection(db,"orders"),{userEmail:currentUser.email,customerName:name,phone:phone,address:address,addressLabel:selectedLabel!=='None'?selectedLabel:'',items:cart,totalBill:total,status:"Pending",canCancel:true,orderTime:Date.now(),packedTime:null,packingSeconds:null,paymentConfirmed:false,paymentConfirmedTime:null,paymentConfirmedBy:null});alert("✅ Order Placed!");cart=[];renderCart();document.getElementById("checkoutForm").style.display="none";clearAddress(true);selectedLabel='None';updateLabelButtons();loadMyOrders();updateOrderButton()}catch(err){alert("Error: "+err.message)}};
+function buildOrderCard(docSnap){const order=docSnap.data();const div=document.createElement("div");div.className="card";let itemsHtml="";if(order.items)order.items.forEach(item=>{itemsHtml+=`<p style="font-size:12px;">${item.name} x ${item.qty} = $${(item.price*item.qty).toFixed(2)}</p>`});let statusHtml=`<div class="status-timeline"><div class="status-step ${order.status==='Pending'?'active':(order.status!=='Pending'&&order.status!=='Cancelled'?'completed':'')}">📦 Placed</div><div class="status-step ${order.status==='Packed'?'active':(order.status==='PickedUp'||order.status==='Delivered'?'completed':'')}">📋 Packed</div><div class="status-step ${order.status==='PickedUp'?'active':(order.status==='Delivered'?'completed':'')}">🚴 Picked</div><div class="status-step ${order.status==='Delivered'?'active completed':''}">🏠 Delivered</div></div>`;let riderInfo="";if(order.riderName){const masked=order.riderName.replace(/(.{2})[^@]*@(.*)/,'$1***@$2');riderInfo=`<p style="font-size:12px;"><strong>🚴 Rider:</strong> ${masked}</p>`}let deliveryTime=order.deliveryTime?`<p style="font-size:12px;"><strong>✅ Delivered:</strong> ${new Date(order.deliveryTime).toLocaleString()}</p>`:'';let labelInfo=order.addressLabel?`<p style="font-size:12px;"><strong>🏷️ Label:</strong> ${order.addressLabel}</p>`:'';div.innerHTML=`<h2 style="font-size:15px;">Order #${docSnap.id.slice(-6)}</h2>${statusHtml}<p style="font-size:12px;"><strong>Status:</strong> <span class="ok">${order.status}</span></p><p style="font-size:12px;"><strong>Total:</strong> $${order.totalBill.toFixed(2)}</p><p style="font-size:12px;"><strong>Address:</strong> ${order.address}</p>${labelInfo}<p style="font-size:12px;"><strong>Phone:</strong> ${order.phone}</p>${riderInfo}${deliveryTime}<hr style="margin:4px 0;">${itemsHtml}`;if(order.status==="Pending"||order.status==="Packed"){const cancelBtn=document.createElement("button");cancelBtn.textContent="❌ Cancel";cancelBtn.className="cancel";cancelBtn.style.padding="4px 12px";cancelBtn.style.fontSize="12px";cancelBtn.onclick=async()=>{if(!confirm("Cancel order?"))return;await updateDoc(doc(db,"orders",docSnap.id),{status:"Cancelled",cancelledTime:Date.now(),cancelledBy:currentUser.email,cancelReason:"Customer"});alert("Cancelled");loadMyOrders()};div.appendChild(cancelBtn)}return div}
+async function loadMyOrders(){if(!currentUser)return;const currentContainer=document.getElementById("currentOrders");const historyContainer=document.getElementById("historyOrders");try{const q=query(collection(db,"orders"),where("userEmail","==",currentUser.email),limit(50));const snapshot=await getDocs(q);currentContainer.innerHTML="";historyContainer.innerHTML="";if(snapshot.empty){currentContainer.innerHTML=`<div class="card">No current orders</div>`;historyContainer.innerHTML=`<div class="card">No history</div>`;return}const current=[],history=[];snapshot.forEach(docSnap=>{const status=docSnap.data().status||"Pending";if(status==="Pending"||status==="Packed"||status==="PickedUp")current.push(docSnap);else history.push(docSnap)});current.sort((a,b)=>(b.data().orderTime||0)-(a.data().orderTime||0));history.sort((a,b)=>(b.data().orderTime||0)-(a.data().orderTime||0));if(current.length===0)currentContainer.innerHTML=`<div class="card">No current orders</div>`;else current.forEach(d=>currentContainer.appendChild(buildOrderCard(d)));if(history.length===0)historyContainer.innerHTML=`<div class="card">No history</div>`;else history.forEach(d=>{const card=buildOrderCard(d);const btn=card.querySelector('button.cancel');if(btn)btn.remove();historyContainer.appendChild(card)})}catch(e){currentContainer.innerHTML=`<div class="card" style="color:red;">Error loading</div>`}}
+function setupTabs(){const tabs=document.querySelectorAll('.tab-btn');const contents={currentTab:document.getElementById('currentTab'),historyTab:document.getElementById('historyTab')};tabs.forEach(tab=>{tab.addEventListener('click',()=>{tabs.forEach(t=>t.classList.remove('active'));tab.classList.add('active');Object.values(contents).forEach(c=>c.classList.remove('active'));const target=tab.dataset.tab;if(contents[target])contents[target].classList.add('active')})})}
+function setupRealtimeCustomerListener(){if(unsubscribeCustomer)unsubscribeCustomer();if(!currentUser)return;const q=query(collection(db,"orders"),where("userEmail","==",currentUser.email),limit(50));unsubscribeCustomer=onSnapshot(q,()=>loadMyOrders(),()=>{})}
+async function loginGoogle(){try{const result=await signInWithPopup(auth,provider);currentUser=result.user}catch(e){alert("Login failed")}}
+document.getElementById("loginBtn").onclick=loginGoogle;document.getElementById("popupLoginBtn").onclick=loginGoogle;
+document.getElementById("logoutBtn").onclick=async()=>{await signOut(auth);document.getElementById("checkoutForm").style.display="none"};
+onAuthStateChanged(auth,async(user)=>{if(user){currentUser=user;const masked=currentUser.email.replace(/(.{2})[^@]*@(.*)/,'$1***@$2');document.getElementById("userInfo").innerHTML=`Logged In: ${masked}`;document.getElementById("loginPopup").style.display="none";document.getElementById("customerArea").style.display="block";initPhoneBoxes();loadUserData();loadMyOrders();renderSavedAddresses();setupRealtimeCustomerListener();clearAddress(true);updateOrderButton();renderCategories()}else{currentUser=null;document.getElementById("userInfo").innerHTML="Not Logged In";document.getElementById("loginPopup").style.display="block";document.getElementById("customerArea").style.display="none";if(unsubscribeCustomer){unsubscribeCustomer();unsubscribeCustomer=null}}});
+setupTabs();renderCategories();renderCart();document.getElementById("customerArea").style.display="none";
+</script>
+</body>
+</html>

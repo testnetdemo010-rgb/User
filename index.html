@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
+    <title>Grocery · FreshMart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-wrapper" id="appWrapper">
+        <div class="app-container" id="appContainer">
+            <!-- Header -->
+            <div class="header">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" placeholder="">
+                    <div class="search-placeholder" id="searchPlaceholder">
+                        <div class="text-wrapper">
+                            <span class="text-item">Search Sugar...</span>
+                            <span class="text-item">Search Ghee...</span>
+                            <span class="text-item">Search Cold Drinks...</span>
+                            <span class="text-item">Search Shampoo...</span>
+                        </div>
+                    </div>
+                    <svg class="search-icon-svg" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="105" cy="85" r="60" stroke="currentColor" stroke-width="8"/>
+                        <path d="M80 50 C95 42 120 43 135 60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M146 72 C148 76 149 81 149 85" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                        <g transform="rotate(-35 145 125)">
+                            <rect x="129" y="130" width="18" height="24" rx="2" fill="white" stroke="currentColor" stroke-width="8"/>
+                            <rect x="120" y="155" width="36" height="90" rx="10" fill="white" stroke="currentColor" stroke-width="8"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="header-icons">
+                    <button class="icon-btn" id="profileIcon">
+                        <svg class="profile-svg" id="profileSvg" viewBox="0 0 24 24">
+                            <circle cx="12" cy="7" r="4"/>
+                            <path d="M4 20 C4 15.5 7.5 12 12 12 C16.5 12 20 15.5 20 20 L20 21 L4 21 Z"/>
+                        </svg>
+                        <img id="profileImg" class="profile-pic" style="display:none" alt="profile">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Profile Drawer -->
+            <div class="profile-drawer-overlay" id="profileDrawerOverlay"></div>
+            <div class="profile-drawer" id="profileDrawer">
+                <div class="drawer-header">
+                    <button class="drawer-close" id="drawerCloseBtn">✕</button>
+                </div>
+                <div id="drawerUserInfo" class="drawer-user-info">
+                    <img id="drawerUserPic" class="drawer-user-pic" src="" alt="profile">
+                    <div>
+                        <div id="drawerUserName" class="drawer-user-name">Guest</div>
+                        <div id="drawerUserEmail" class="drawer-user-email">Not logged in</div>
+                    </div>
+                </div>
+                <div id="drawerMenuItems"></div>
+            </div>
+
+            <!-- Cart Drawer -->
+            <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
+            <div class="cart-drawer" id="cartDrawer">
+                <div class="cart-drawer-header">
+                    <h2 id="cartDrawerTitle">🛒 Cart</h2>
+                    <button class="cart-drawer-close" id="cartDrawerClose">✕</button>
+                </div>
+                <div class="cart-tabs">
+                    <button class="active" data-tab="cartTab">🛒 Cart</button>
+                    <button data-tab="ordersTab">📦 My Orders</button>
+                </div>
+                <div id="cartTab" class="cart-tab-content active">
+                    <div class="cart-drawer-items" id="cartDrawerItems">
+                        <div class="cart-drawer-empty">Your cart is empty</div>
+                    </div>
+                    <div class="cart-drawer-footer" id="cartDrawerFooter">
+                        <div class="cart-drawer-total">
+                            <span>Total</span>
+                            <span id="cartDrawerTotal">Rs. 0</span>
+                        </div>
+                        <button class="cart-drawer-checkout" id="cartDrawerCheckout">Proceed to Checkout</button>
+                        <div class="drawer-checkout-section" id="drawerCheckoutSection" style="display:none;">
+                            <h4>📝 Details</h4>
+                            <input type="text" id="drawerName" placeholder="Your Name" style="width:100%;padding:10px 14px;border-radius:40px;border:1px solid #e0e8f0;font-size:14px;margin-bottom:8px;background:white;">
+                            <input type="text" id="drawerPhoneInput" class="phone-input" placeholder="03XX-XXXXXXX" maxlength="12" style="width:100%;padding:10px 14px;border-radius:40px;border:1px solid #e0e8f0;font-size:14px;margin-bottom:8px;background:white;letter-spacing:1px;">
+                            <button class="address-btn" id="drawerQuickLocationBtn">📍 Get Current Location</button>
+                            <div style="display:flex;gap:6px;margin-top:4px;">
+                                <input type="text" id="drawerAddress" placeholder="Delivery Address" style="flex:1;padding:8px 14px;border-radius:40px;border:1px solid #e0e8f0;font-size:13px;background:white;">
+                                <button class="drawer-clear-addr" id="drawerClearAddressBtn" style="background:#eef2f7;border:none;padding:4px 12px;border-radius:30px;font-size:12px;cursor:pointer;">✖</button>
+                            </div>
+                            <div id="drawerSavedAsSection" style="display:none;margin-top:6px;">
+                                <span style="font-weight:600;font-size:12px;">Save address as:</span>
+                                <div class="label-btns" style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;">
+                                    <button class="drawer-label-btn label-btn active-none" data-label="None">None</button>
+                                    <button class="drawer-label-btn label-btn" data-label="Home">🏠 Home</button>
+                                    <button class="drawer-label-btn label-btn" data-label="Office">🏢 Office</button>
+                                </div>
+                            </div>
+                            <div id="drawerSavedAddressesList" style="margin-top:4px;"></div>
+                            <button class="order-btn" id="drawerPlaceOrderBtn">📦 Place Order</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="ordersTab" class="cart-tab-content">
+                    <div class="drawer-orders-section" style="margin-top:0;border-top:none;padding-top:0;">
+                        <h4>📋 My Orders</h4>
+                        <div class="orders-tabs">
+                            <button class="tab-btn active" data-tab="drawerCurrentTab">Current</button>
+                            <button class="tab-btn" data-tab="drawerHistoryTab">History</button>
+                        </div>
+                        <div id="drawerCurrentTab" class="tab-content active">
+                            <div id="drawerCurrentOrders"></div>
+                        </div>
+                        <div id="drawerHistoryTab" class="tab-content">
+                            <div id="drawerHistoryOrders"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div id="customerArea">
+                <div id="categories"></div>
+                <div id="productsSection" class="products-section">
+                    <div class="back-row">
+                        <button class="back-btn" id="backToCategoriesBtn">⬅ Back</button>
+                        <span class="category-title" id="categoryTitle">Category</span>
+                    </div>
+                    <div id="products" class="product-grid"></div>
+                </div>
+                <div id="cartBlock" style="display:none"></div>
+                <div id="checkoutForm" style="display:none"></div>
+                <div id="ordersSection" style="display:none"></div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                MeezoMart.com ©2026<span class="sep">·</span>FortAbbas<span class="dot"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Cart Bar -->
+    <div class="sticky-cart-bar" id="stickyCartBar">
+        <div class="left">
+            <div class="icon-box">
+                <svg class="cart-svg" viewBox="0 0 24 24">
+                    <path d="M3 3h4l1.1 2H21l-2.2 8.5a2 2 0 0 1-2 1.5H9a2 2 0 0 1-2-1.5L4.5 5H3zm6 14a2 2 0 1 0 0 4a2 2 0 0 0 0-4zm8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4z"/>
+                </svg>
+            </div>
+            <div>
+                <div class="items" id="stickyItems">0 items</div>
+                <div class="price" id="stickyPrice">Rs. 0</div>
+            </div>
+        </div>
+        <div class="right" id="stickyViewCart">View Cart<span class="arrow">▶</span></div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js",
+            "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
+        }
+    }
+    </script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

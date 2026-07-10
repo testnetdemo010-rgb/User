@@ -1532,7 +1532,7 @@
       return boxLabelTranslations[englishLabel] || englishLabel;
     }
 
-    // ===== ROUTING SYSTEM =====
+    // ===== HASH-BASED ROUTING SYSTEM =====
     function generateProductId(category, name) {
       return `${category.toLowerCase().replace(/\s+/g, '-')}-${name.toLowerCase().replace(/\s+/g, '-')}`;
     }
@@ -1542,20 +1542,19 @@
     }
 
     function getCurrentRoute() {
-      const path = window.location.pathname;
-      const params = new URLSearchParams(window.location.search);
+      const hash = window.location.hash.substring(1); // Remove the # character
       
-      if (path === '/' || path === '') {
+      if (!hash || hash === '') {
         return { page: 'home' };
       }
       
-      if (path.startsWith('/category/')) {
-        const categoryName = decodeURIComponent(path.replace('/category/', ''));
+      if (hash.startsWith('category/')) {
+        const categoryName = decodeURIComponent(hash.replace('category/', ''));
         return { page: 'category', name: categoryName };
       }
       
-      if (path.startsWith('/product/')) {
-        const productId = decodeURIComponent(path.replace('/product/', ''));
+      if (hash.startsWith('product/')) {
+        const productId = decodeURIComponent(hash.replace('product/', ''));
         return { page: 'product', id: productId };
       }
       
@@ -1563,16 +1562,16 @@
     }
 
     function navigateTo(page, data = {}) {
-      let url = '';
+      let hash = '';
       if (page === 'home') {
-        url = '/';
+        hash = '';
       } else if (page === 'category') {
-        url = `/category/${encodeURIComponent(data.name)}`;
+        hash = `category/${encodeURIComponent(data.name)}`;
       } else if (page === 'product') {
-        url = `/product/${encodeURIComponent(data.id)}`;
+        hash = `product/${encodeURIComponent(data.id)}`;
       }
       
-      window.history.pushState({ page, data }, '', url);
+      window.location.hash = hash;
       handleRouteChange();
     }
 
@@ -1735,7 +1734,8 @@
 
     // ===== SHARE FUNCTION =====
     function shareProduct(productId) {
-      const url = `${window.location.origin}/product/${productId}`;
+      // Use hash-based URL for sharing
+      const url = `${window.location.origin}${window.location.pathname}#product/${productId}`;
       if (navigator.share) {
         navigator.share({
           title: 'Check out this product',
@@ -2059,8 +2059,8 @@
       }
     });
 
-    // Browser back/forward
-    window.addEventListener('popstate', () => {
+    // Browser back/forward with hash changes
+    window.addEventListener('hashchange', () => {
       handleRouteChange();
     });
 
@@ -3633,10 +3633,11 @@
     updateOrderBadge();
     updateSearchPlaceholder();
     
-    // Handle initial route
+    // Handle initial route from hash
     setTimeout(() => handleRouteChange(), 100);
     
-    console.log("✅ MeezoMart Loaded with Routing — Shareable product links!");
+    console.log("✅ MeezoMart Loaded with Hash-based Routing — Shareable product links!");
+    console.log("📱 Share URLs like: " + window.location.origin + window.location.pathname + "#product/grocery-sunflower-oil-1l");
   </script>
 </body>
 </html>

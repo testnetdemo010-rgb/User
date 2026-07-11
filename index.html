@@ -466,28 +466,139 @@
     .category-card:hover { border-color: #00B14F60; transform: scale(.97); }
     .category-card .cat-img { width: 100%; height: 72px; object-fit: cover; border-radius: 12px; background: #f0f2f6; display: block; }
     .category-card .cat-name { font-weight: 600; font-size: 11px; color: #0b1a2e; display: block; margin-top: 4px; }
-    .products-section { display: none; margin-top: 1px; animation: fadeUp .25s ease; }
+
+    /* --- PRODUCTS SECTION WITH SIDEBAR (3-LEVEL) --- */
+    .products-layout {
+      display: none;
+      margin-top: 1px;
+      animation: fadeUp .25s ease;
+    }
+    .products-layout.active { display: block; }
     @keyframes fadeUp { 0% { opacity: .5; transform: translateY(6px); } 100% { opacity: 1; transform: translateY(0); } }
+
     .back-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding: 0 4px; }
     .back-btn { background: #f0f2f6; border: none; padding: 6px 14px; border-radius: 40px; font-weight: 600; font-size: 14px; color: #1e293b; cursor: pointer; transition: .15s; display: flex; align-items: center; gap: 6px; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
     .back-btn:hover { background: #e2e8f0; }
-    .category-title { font-size: 20px; font-weight: 700; color: #0b1a2e; }
-    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 8px; }
-    .product-card { background: #fff; border-radius: 20px; padding: 12px 8px 10px; border: 1px solid #edf2f9; text-align: center; position: relative; }
-    .product-img { width: 100%; height: 110px; object-fit: contain; border-radius: 12px; background: #f8fafc; display: block; margin-bottom: 4px; cursor: pointer; }
-    .product-name { font-weight: 600; font-size: 13px; color: #0b1a2e; margin: 3px 0; cursor: pointer; }
+    .category-title { font-size: 18px; font-weight: 700; color: #0b1a2e; }
+
+    .category-container {
+      display: flex;
+      gap: 0;
+      min-height: 400px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #edf2f9;
+    }
+
+    /* --- SIDEBAR (Sub-Categories / Boxes) --- */
+    .sub-category-sidebar {
+      width: 100px;
+      min-width: 100px;
+      background: #fafafa;
+      border-right: 1px solid #e6edf5;
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 8px 0;
+      flex-shrink: 0;
+    }
+    .sub-category-sidebar::-webkit-scrollbar { width: 3px; }
+    .sub-category-sidebar::-webkit-scrollbar-track { background: #f1f1f1; }
+    .sub-category-sidebar::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 10px; }
+
+    .sub-item {
+      text-align: center;
+      padding: 10px 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-right: 3px solid transparent;
+      color: #666;
+      font-size: 10px;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .sub-item:hover { background: #f0fdf4; }
+    .sub-item.active {
+      background: #fff;
+      color: #16803c;
+      font-weight: 600;
+      border-right: 3px solid #16803c;
+    }
+    .sub-item img {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #f0f2f6;
+      margin-bottom: 2px;
+    }
+    .sub-item .sub-name { line-height: 1.2; }
+
+    /* --- PRODUCTS GRID --- */
+    .products-grid-wrapper {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      max-height: 500px;
+    }
+    .products-grid-wrapper::-webkit-scrollbar { width: 3px; }
+    .products-grid-wrapper::-webkit-scrollbar-track { background: #f1f1f1; }
+    .products-grid-wrapper::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 10px; }
+
+    .product-grid-sub {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 10px 8px;
+      border: 1px solid #edf2f9;
+      text-align: center;
+      position: relative;
+      transition: .15s;
+    }
+    .product-card:hover { border-color: #00b14f40; }
+    .product-img { width: 100%; height: 100px; object-fit: contain; border-radius: 10px; background: #f8fafc; display: block; margin-bottom: 4px; cursor: pointer; }
+    .product-name { font-weight: 600; font-size: 12px; color: #0b1a2e; margin: 3px 0; cursor: pointer; }
     .product-name:hover { color: #00b14f; }
-    .product-price { font-weight: 600; font-size: 15px; color: #0d7a3e; margin: 2px 0 5px; }
+    .product-price { font-weight: 600; font-size: 14px; color: #0d7a3e; margin: 2px 0 4px; }
     .qty-controls { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; }
-    .qty-controls button { background: #eef2f7; border: none; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #1e293b; transition: .15s; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
+    .qty-controls button { background: #eef2f7; border: none; width: 26px; height: 26px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #1e293b; transition: .15s; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
     .qty-controls button:hover { background: #dce2ea; }
-    .qty-controls .qty-display { font-weight: 600; font-size: 15px; min-width: 24px; text-align: center; }
-    .add-to-cart-btn { background: #0d7a3e; color: #fff; border: none; padding: 6px 10px; border-radius: 40px; font-weight: 600; font-size: 12px; cursor: pointer; transition: .2s; width: 100%; margin-top: 4px; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
+    .qty-controls .qty-display { font-weight: 600; font-size: 14px; min-width: 22px; text-align: center; }
+    .add-to-cart-btn { background: #0d7a3e; color: #fff; border: none; padding: 5px 10px; border-radius: 30px; font-weight: 600; font-size: 11px; cursor: pointer; transition: .2s; width: 100%; margin-top: 4px; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
     .add-to-cart-btn:hover { background: #0b6a35; }
     .qty-controls.hidden { display: none; }
     .wishlist-btn { position: absolute; top: 4px; right: 4px; background: #fff; border: none; font-size: 14px; cursor: pointer; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.06); transition: .15s; color: #cbd5e1; padding: 0; line-height: 1; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
     .wishlist-btn:hover { transform: scale(1.1); }
     .wishlist-btn.active { color: #ef4444; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 500px) {
+      .sub-category-sidebar { width: 80px; min-width: 80px; }
+      .sub-item img { width: 40px; height: 40px; }
+      .sub-item { font-size: 9px; padding: 8px 2px; }
+      .product-grid-sub { gap: 8px; }
+      .product-img { height: 80px; }
+      .product-name { font-size: 11px; }
+      .product-price { font-size: 12px; }
+      .category-container { border-radius: 12px; }
+    }
+    @media (max-width: 400px) {
+      .sub-category-sidebar { width: 70px; min-width: 70px; }
+      .sub-item img { width: 34px; height: 34px; }
+      .products-grid-wrapper { padding: 8px; }
+      .product-grid-sub { gap: 6px; }
+      .product-card { padding: 6px 4px; }
+    }
+
+    /* --- CART DRAWER --- */
     .cart-drawer-overlay, .profile-drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.3); z-index: 998; display: none; opacity: 0; transition: opacity 0.25s ease; will-change: opacity; pointer-events: none; }
     .cart-drawer-overlay.open, .profile-drawer-overlay.open { display: block; opacity: 1; pointer-events: auto; }
     .cart-drawer { position: fixed; top: 0; left: -340px; width: 340px; max-width: 90%; height: 100%; background: #fff; z-index: 1000; padding: 20px 16px; box-shadow: 4px 0 30px rgba(0, 0, 0, 0.12); transition: left 0.28s cubic-bezier(0.22, 1, 0.36, 1); display: flex; flex-direction: column; border-radius: 0 24px 24px 0; overflow-y: auto; will-change: left; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
@@ -517,15 +628,9 @@
     .drawer-checkout-section input { width: 100%; padding: 10px 14px; border-radius: 40px; border: 1px solid #e0e8f0; font-size: 14px; margin-bottom: 8px; background: #fff; outline: none !important; }
     .drawer-checkout-section .phone-input { width: 100%; padding: 10px 14px; border-radius: 40px; border: 1px solid #e0e8f0; font-size: 14px; margin-bottom: 8px; background: #fff; letter-spacing: 1px; outline: none !important; }
     .drawer-checkout-section .phone-input:focus { outline: 0; border-color: #00b14f; box-shadow: 0 0 0 2px #00b14f40; }
-    .drawer-checkout-section .saved-addr-item { display: flex; align-items: center; gap: 8px; background: #fff; padding: 4px 10px; border-radius: 40px; margin-bottom: 4px; font-size: 13px; }
     .drawer-checkout-section .order-btn { width: 100%; padding: 12px; border: none; border-radius: 40px; background: #cbd5e1; color: #475569; font-weight: 700; font-size: 15px; margin-top: 4px; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
     .drawer-checkout-section .order-btn.ready { background: #00b14f; color: #fff; cursor: pointer; box-shadow: 0 4px 14px rgba(0,177,79,.2); }
     .drawer-checkout-section .order-btn.ready:hover { background: #009a42; }
-    .drawer-checkout-section .label-btns { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
-    .drawer-checkout-section .label-btn { padding: 2px 12px; border-radius: 30px; border: 2px solid #d0d7dd; background: #fff; cursor: pointer; font-size: 11px; font-weight: 500; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
-    .drawer-checkout-section .label-btn.active-home { border-color: #28a745; background: #28a745; color: #fff; }
-    .drawer-checkout-section .label-btn.active-office { border-color: #ff9800; background: #ff9800; color: #fff; }
-    .drawer-checkout-section .label-btn.active-none { border-color: #1a5fc7; background: #1a5fc7; color: #fff; }
     .drawer-checkout-section .address-btn { background: #2563eb; color: #fff; border: none; padding: 8px 16px; border-radius: 40px; font-weight: 600; font-size: 13px; cursor: pointer; width: 100%; margin-bottom: 8px; outline: none !important; -webkit-tap-highlight-color: transparent !important; }
     .drawer-checkout-section .address-btn:hover { background: #1d4ed8; }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
@@ -1147,18 +1252,43 @@
     .product-card .product-name:hover {
       opacity: 0.8;
     }
+
+    /* --- Address row clear button --- */
+    .address-row .input-wrap .clear-btn {
+      background: transparent;
+      border: none;
+      padding: 4px 8px;
+      font-size: 16px;
+      cursor: pointer;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 30px;
+      transition: background 0.15s;
+      height: 34px;
+      width: 34px;
+    }
+    .address-row .input-wrap .clear-btn:hover {
+      background: #e2e8f0;
+    }
+    .address-row .input-wrap .clear-btn:active {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 <body>
   <div class="app-wrapper" id="appWrapper">
     <div class="app-container" id="appContainer">
+      <!-- HEADER -->
       <div class="header">
         <div class="search-wrapper">
           <input type="text" id="searchInput" placeholder="">
           <div class="search-placeholder" id="searchPlaceholder">
             <div class="text-wrapper">
-              <span class="text-item">Flour & Grains🌾 </span>
-              <span class="text-item">Soap🧼 </span>
+              <span class="text-item">Flour & Grains🌾</span>
+              <span class="text-item">Soap🧼</span>
               <span class="text-item">Oral🪥</span>
               <span class="text-item">shampoo🧴</span>
             </div>
@@ -1184,6 +1314,8 @@
           </button>
         </div>
       </div>
+
+      <!-- PROFILE DRAWER -->
       <div class="profile-drawer-overlay" id="profileDrawerOverlay"></div>
       <div class="profile-drawer" id="profileDrawer">
         <div class="drawer-header">
@@ -1208,6 +1340,8 @@
         </div>
         <div id="drawerMenuItems"></div>
       </div>
+
+      <!-- CART DRAWER -->
       <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
       <div class="cart-drawer" id="cartDrawer">
         <div class="cart-drawer-header">
@@ -1239,10 +1373,8 @@
                 </div>
                 <span class="loc-checkmark-wrap" id="addressTickWrapper" style="display:none;">
                   <svg viewBox="0 0 190 230" xmlns="http://www.w3.org/2000/svg">
-                    <path class="loc-checkmark-fill"
-                      d="M 139 79 L 136 79 L 134 80 L 132 82 L 128 84 L 124 88 L 123 88 L 100 112 L 100 113 L 96 117 L 96 118 L 82 134 L 81 134 L 78 131 L 78 130 L 69 121 L 67 120 L 60 120 L 56 123 L 56 124 L 53 127 L 56 127 L 60 129 L 62 131 L 62 132 L 68 139 L 69 142 L 71 144 L 75 152 L 75 154 L 77 156 L 87 151 L 90 148 L 92 143 L 94 141 L 98 133 L 100 131 L 100 130 L 102 128 L 102 127 L 104 125 L 108 118 L 111 115 L 111 114 L 116 108 L 116 107 L 124 98 L 124 97 L 140 80 Z" />
-                    <path class="loc-checkmark-stroke"
-                      d="M 139 79 L 136 79 L 134 80 L 132 82 L 128 84 L 124 88 L 123 88 L 100 112 L 100 113 L 96 117 L 96 118 L 82 134 L 81 134 L 78 131 L 78 130 L 69 121 L 67 120 L 60 120 L 56 123 L 56 124 L 53 127 L 56 127 L 60 129 L 62 131 L 62 132 L 68 139 L 69 142 L 71 144 L 75 152 L 75 154 L 77 156 L 87 151 L 90 148 L 92 143 L 94 141 L 98 133 L 100 131 L 100 130 L 102 128 L 102 127 L 104 125 L 108 118 L 111 115 L 111 114 L 116 108 L 116 107 L 124 98 L 124 97 L 140 80 Z" />
+                    <path class="loc-checkmark-fill" d="M 139 79 L 136 79 L 134 80 L 132 82 L 128 84 L 124 88 L 123 88 L 100 112 L 100 113 L 96 117 L 96 118 L 82 134 L 81 134 L 78 131 L 78 130 L 69 121 L 67 120 L 60 120 L 56 123 L 56 124 L 53 127 L 56 127 L 60 129 L 62 131 L 62 132 L 68 139 L 69 142 L 71 144 L 75 152 L 75 154 L 77 156 L 87 151 L 90 148 L 92 143 L 94 141 L 98 133 L 100 131 L 100 130 L 102 128 L 102 127 L 104 125 L 108 118 L 111 115 L 111 114 L 116 108 L 116 107 L 124 98 L 124 97 L 140 80 Z" />
+                    <path class="loc-checkmark-stroke" d="M 139 79 L 136 79 L 134 80 L 132 82 L 128 84 L 124 88 L 123 88 L 100 112 L 100 113 L 96 117 L 96 118 L 82 134 L 81 134 L 78 131 L 78 130 L 69 121 L 67 120 L 60 120 L 56 123 L 56 124 L 53 127 L 56 127 L 60 129 L 62 131 L 62 132 L 68 139 L 69 142 L 71 144 L 75 152 L 75 154 L 77 156 L 87 151 L 90 148 L 92 143 L 94 141 L 98 133 L 100 131 L 100 130 L 102 128 L 102 127 L 104 125 L 108 118 L 111 115 L 111 114 L 116 108 L 116 107 L 124 98 L 124 97 L 140 80 Z" />
                   </svg>
                 </span>
               </div>
@@ -1277,16 +1409,26 @@
           </div>
         </div>
       </div>
+
+      <!-- MAIN CONTENT -->
       <div id="customerArea">
         <div id="categories"></div>
-        <div id="productsSection" class="products-section">
+
+        <!-- 3-LEVEL PRODUCTS LAYOUT -->
+        <div class="products-layout" id="productsLayout">
           <div class="back-row">
             <button class="back-btn" id="backToCategoriesBtn">⬅ Back</button>
             <span class="category-title" id="categoryTitle">Category</span>
           </div>
-          <div id="products" class="product-grid"></div>
+          <div class="category-container">
+            <div class="sub-category-sidebar" id="subCategorySidebar"></div>
+            <div class="products-grid-wrapper" id="productsGridWrapper">
+              <div class="product-grid-sub" id="productsGrid"></div>
+            </div>
+          </div>
         </div>
-        <!-- Product Detail Page -->
+
+        <!-- PRODUCT DETAIL -->
         <div id="productDetailSection">
           <div class="back-row">
             <button class="back-btn" id="backFromDetailBtn">⬅ Back</button>
@@ -1295,35 +1437,30 @@
           <div id="productDetailContainer"></div>
         </div>
       </div>
-      <div class="footer">
-       © MeezoMart ™ 2026<span class="sep">·</span>FortAbbas<span class="dot"></span>
-      </div>
+
+      <div class="footer">© MeezoMart ™ 2026<span class="sep">·</span>FortAbbas<span class="dot"></span></div>
     </div>
   </div>
+
+  <!-- POPUP -->
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-box" id="popupBox">
-      <div class="icon-wrap" id="popupIconWrap" style="display:none;">
-        <span class="emoji-only">✅</span>
-      </div>
+      <div class="icon-wrap" id="popupIconWrap" style="display:none;"><span class="emoji-only">✅</span></div>
       <h3 id="popupTitle">Success!</h3>
       <p id="popupMessage">Your order has been placed.</p>
       <div id="popupActions" class="btn-group"></div>
     </div>
   </div>
+
+  <!-- STICKY CART -->
   <div class="sticky-cart-bar" id="stickyCartBar">
     <div class="left">
-      <div class="icon-box">
-        <svg class="cart-svg" viewBox="0 0 24 24">
-          <path d="M3 3h4l1.1 2H21l-2.2 8.5a2 2 0 0 1-2 1.5H9a2 2 0 0 1-2-1.5L4.5 5H3zm6 14a2 2 0 1 0 0 4a2 2 0 0 0 0-4zm8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4z"/>
-        </svg>
-      </div>
-      <div>
-        <div class="items" id="stickyItems">0 items</div>
-        <div class="price" id="stickyPrice">Rs. 0</div>
-      </div>
+      <div class="icon-box"><svg class="cart-svg" viewBox="0 0 24 24"><path d="M3 3h4l1.1 2H21l-2.2 8.5a2 2 0 0 1-2 1.5H9a2 2 0 0 1-2-1.5L4.5 5H3zm6 14a2 2 0 1 0 0 4a2 2 0 0 0 0-4zm8 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4z"/></svg></div>
+      <div><div class="items" id="stickyItems">0 items</div><div class="price" id="stickyPrice">Rs. 0</div></div>
     </div>
     <div class="right" id="stickyViewCart">View Cart<span class="arrow">▶</span></div>
   </div>
+
   <script type="importmap">
     {
       "imports": {
@@ -1355,20 +1492,17 @@
 
     let currentUser = null;
     let cart = [];
-    let selectedLabel = "None";
     let wishlist = [];
     const PKR_RATE = 280;
-    const CART_STORAGE_KEY = 'freshmart_cart';
-    const WISHLIST_STORAGE_KEY = 'freshmart_wishlist';
+    const CART_STORAGE_KEY = 'meezomart_cart';
+    const WISHLIST_STORAGE_KEY = 'meezomart_wishlist';
     let ordersCache = { current: [], history: [], loaded: false, loading: false };
     const LANG_STORAGE_KEY = 'meezomart_language';
     let currentLanguage = 'en';
 
     function toPKR(usd) { return Math.round(usd * PKR_RATE); }
     function formatPKR(amount) { return "Rs. " + amount.toLocaleString(); }
-    function formatPKRNoComma(amount) {
-      return "Rs. " + amount.toString();
-    }
+    function formatPKRNoComma(amount) { return "Rs. " + amount.toString(); }
 
     const categoryImage = "https://i.postimg.cc/RVpYHz4s/20260617-115609.png";
     const productImages = [
@@ -1384,10 +1518,22 @@
 
     // ===== URDU TRANSLATIONS =====
     const productTranslations = {
+      // Oils
       'Sultan Ghee 1kg': 'سلطان گھی 1 کلو',
+      'Shahbaz Ghee 1kg': 'شہباز گھی 1 کلو',
+      'Sufi Ghee 1kg': 'صوفی گھی 1 کلو',
       'Sunflower Oil 1L': 'سورج مکھی کا تیل 1 لیٹر',
       'Olive Oil 500ml': 'زیتون کا تیل 500 ملی',
       'Cooking Oil 3L': 'کھانے کا تیل 3 لیٹر',
+      // Cold Drinks
+      'Pepsi 1.5L': 'پیپسی 1.5 لیٹر',
+      'Sprite 1.5L': 'سپرائٹ 1.5 لیٹر',
+      'Coca-Cola 1.5L': 'کوکا کولا 1.5 لیٹر',
+      // Shampoo
+      'Head & Shoulders 400ml': 'ہیڈ اینڈ شولڈرز 400 ملی',
+      'Sunsilk 400ml': 'سن سلک 400 ملی',
+      'Pantene 500ml': 'پینٹین 500 ملی',
+      // Other products
       'Sugar 1kg': 'چینی 1 کلو',
       'Brown Sugar 500g': 'براؤن شوگر 500 گرام',
       'Gur 1kg': 'گڑ 1 کلو',
@@ -1400,10 +1546,6 @@
       'Black Pepper 100g': 'کالی مرچ 100 گرام',
       'Turmeric 100g': 'ہلدی 100 گرام',
       'Cumin 100g': 'زیرہ 100 گرام',
-      'Pepsi 1.5L': 'پیپسی 1.5 لیٹر',
-      'Coca-Cola 1.5L': 'کوکا کولا 1.5 لیٹر',
-      'Sprite 1.5L': 'سپرائٹ 1.5 لیٹر',
-      'Mtn Dew 1.5L': 'ماؤنٹین ڈیو 1.5 لیٹر',
       'Oreo 200g': 'اوریو 200 گرام',
       'Peek Freans 200g': 'پیک فرینز 200 گرام',
       'Cake Rusk 200g': 'کیک رسک 200 گرام',
@@ -1416,10 +1558,6 @@
       'Loose Tea 250g': 'ڈھیلی چائے 250 گرام',
       'Coffee 100g': 'کافی 100 گرام',
       'Green Tea 20ct': 'گرین ٹی 20 عدد',
-      'Pantene 500ml': 'پینٹین 500 ملی',
-      'Dove Conditioner': 'ڈو کنڈیشنر',
-      'Head & Shoulders': 'ہیڈ اینڈ شولڈرز',
-      'Sunsilk 400ml': 'سن سلک 400 ملی',
       'Dove Soap 100g': 'ڈو صابن 100 گرام',
       'Lifebuoy 125g': 'لائف بوائے 125 گرام',
       'Lux Soap 125g': 'لکس صابن 125 گرام',
@@ -1432,7 +1570,7 @@
       'Moisturizer 100ml': 'موئسچرائزر 100 ملی',
       'Deodorant 150ml': 'ڈیوڈورنٹ 150 ملی',
       'Sunscreen SPF50': 'سن اسکرین SPF50',
-      'Flooqr Cleaner 1L': 'فلور کلینر 1 لیٹر',
+      'Floor Cleaner 1L': 'فلور کلینر 1 لیٹر',
       'Dish Soap 500ml': 'برتن صابن 500 ملی',
       'Sponge Pack': 'سپنج پیک',
       'Glass Cleaner': 'شیشہ کلینر',
@@ -1531,247 +1669,6 @@
     function getTranslatedBoxLabel(englishLabel) {
       return boxLabelTranslations[englishLabel] || englishLabel;
     }
-
-    // ===== HASH-BASED ROUTING SYSTEM =====
-    function generateProductId(category, name) {
-      return `${category.toLowerCase().replace(/\s+/g, '-')}-${name.toLowerCase().replace(/\s+/g, '-')}`;
-    }
-
-    function getProductFromId(productId) {
-      return allProducts.find(p => generateProductId(p.category, p.name) === productId);
-    }
-
-    function getCurrentRoute() {
-      const hash = window.location.hash.substring(1); // Remove the # character
-      
-      if (!hash || hash === '') {
-        return { page: 'home' };
-      }
-      
-      if (hash.startsWith('category/')) {
-        const categoryName = decodeURIComponent(hash.replace('category/', ''));
-        return { page: 'category', name: categoryName };
-      }
-      
-      if (hash.startsWith('product/')) {
-        const productId = decodeURIComponent(hash.replace('product/', ''));
-        return { page: 'product', id: productId };
-      }
-      
-      return { page: 'home' };
-    }
-
-    function navigateTo(page, data = {}) {
-      let hash = '';
-      if (page === 'home') {
-        hash = '';
-      } else if (page === 'category') {
-        hash = `category/${encodeURIComponent(data.name)}`;
-      } else if (page === 'product') {
-        hash = `product/${encodeURIComponent(data.id)}`;
-      }
-      
-      window.location.hash = hash;
-      handleRouteChange();
-    }
-
-    // ===== PAGE RENDER FUNCTIONS =====
-    function showHomePage() {
-      document.getElementById('categories').style.display = 'block';
-      document.getElementById('productsSection').style.display = 'none';
-      document.getElementById('productDetailSection').style.display = 'none';
-      renderCategories();
-    }
-
-    function showCategoryPage(categoryName) {
-      const category = categoryData.find(c => c.name === categoryName);
-      if (!category) {
-        showHomePage();
-        return;
-      }
-      
-      document.getElementById('categories').style.display = 'none';
-      document.getElementById('productsSection').style.display = 'block';
-      document.getElementById('productDetailSection').style.display = 'none';
-      
-      const allCategoryProducts = [];
-      category.boxes.forEach(box => {
-        box.items.forEach(item => {
-          const product = allProducts.find(p => p.name === item.name && p.price === item.price);
-          if (product) {
-            allCategoryProducts.push(product);
-          }
-        });
-      });
-      
-      const title = document.getElementById('categoryTitle');
-      const displayName = currentLanguage === 'ur' ? getTranslatedCategory(category.name) : category.name;
-      title.textContent = displayName;
-      
-      const productContainer = document.getElementById('products');
-      productContainer.innerHTML = '';
-      
-      allCategoryProducts.forEach((prod, index) => {
-        const qty = getCartQty(prod.id);
-        const isFav = isInWishlist(prod.id);
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.dataset.productId = prod.id;
-        const hasQty = qty > 0;
-        const imgSrc = productImages[index % productImages.length];
-        const displayName2 = currentLanguage === 'ur' ? getTranslatedName(prod.name) : prod.name;
-        const productId = generateProductId(prod.category, prod.name);
-        
-        card.innerHTML = `
-          <button class="wishlist-btn ${isFav ? 'active' : ''}" data-product-id="${prod.id}">${isFav ? '❤️' : '🤍'}</button>
-          <img class="product-img" src="${imgSrc}" alt="${prod.name}" loading="lazy" onclick="window.navigateTo('product', { id: '${productId}' })">
-          <div class="product-name" onclick="window.navigateTo('product', { id: '${productId}' })">${displayName2}</div>
-          <div class="product-price">${formatPKR(toPKR(prod.price))}</div>
-          <button class="add-to-cart-btn" data-id="${prod.id}" style="${hasQty ? 'display:none' : ''}">Add to Cart</button>
-          <div class="qty-controls ${hasQty ? '' : 'hidden'}">
-            <button class="qty-minus" data-id="${prod.id}">−</button>
-            <span class="qty-display" data-id="${prod.id}">${qty}</span>
-            <button class="qty-plus" data-id="${prod.id}">+</button>
-          </div>
-        `;
-        productContainer.appendChild(card);
-        
-        const atcBtn = card.querySelector('.add-to-cart-btn');
-        if (atcBtn) { atcBtn.addEventListener('click', e => { e.stopPropagation(); addToCart(prod.id); }, { passive: false }); }
-        card.querySelector('.wishlist-btn').addEventListener('click', e => { e.stopPropagation(); toggleWishlist(prod.id); }, { passive: false });
-        card.querySelector('.qty-plus').addEventListener('click', e => { e.stopPropagation(); addToCart(prod.id); }, { passive: false });
-        card.querySelector('.qty-minus').addEventListener('click', e => { e.stopPropagation(); removeFromCart(prod.id); }, { passive: false });
-      });
-    }
-
-    function showProductPage(productId) {
-      const product = getProductFromId(productId);
-      if (!product) {
-        showHomePage();
-        return;
-      }
-      
-      document.getElementById('categories').style.display = 'none';
-      document.getElementById('productsSection').style.display = 'none';
-      document.getElementById('productDetailSection').style.display = 'block';
-      
-      const container = document.getElementById('productDetailContainer');
-      const title = document.getElementById('productDetailTitle');
-      const displayName = currentLanguage === 'ur' ? getTranslatedName(product.name) : product.name;
-      title.textContent = displayName;
-      
-      const isFav = isInWishlist(product.id);
-      const qty = getCartQty(product.id);
-      const imgSrc = productImages[product.imgIndex % productImages.length];
-      
-      container.innerHTML = `
-        <div style="text-align:center;padding:8px 0 16px;">
-          <img class="product-detail-img" src="${imgSrc}" alt="${product.name}" loading="lazy">
-          <h2 class="product-detail-name">${displayName}</h2>
-          <p class="product-detail-meta">${currentLanguage === 'ur' ? getTranslatedCategory(product.category) : product.category} · ${currentLanguage === 'ur' ? getTranslatedBoxLabel(product.boxLabel) : product.boxLabel}</p>
-          <div class="product-detail-price">${formatPKR(toPKR(product.price))}</div>
-          
-          <div class="product-detail-actions">
-            <button class="product-detail-wishlist ${isFav ? 'active' : ''}" data-product-id="${product.id}">
-              ${isFav ? '❤️' : '🤍'}
-            </button>
-            
-            <div class="product-detail-qty">
-              <button class="qty-minus-detail" data-id="${product.id}">−</button>
-              <span class="qty-display-detail">${qty}</span>
-              <button class="qty-plus-detail" data-id="${product.id}">+</button>
-            </div>
-            
-            <button class="product-detail-add-btn" data-id="${product.id}" style="display:${qty > 0 ? 'none' : 'block'}">
-              Add to Cart
-            </button>
-            
-            <button class="share-btn" onclick="window.shareProduct('${productId}')">
-              📤 Share Product
-            </button>
-          </div>
-        </div>
-      `;
-      
-      // Event listeners
-      container.querySelector('.product-detail-wishlist').addEventListener('click', () => {
-        toggleWishlist(product.id);
-        showProductPage(productId);
-      });
-      
-      container.querySelector('.qty-plus-detail').addEventListener('click', () => {
-        addToCart(product.id);
-        showProductPage(productId);
-      });
-      
-      container.querySelector('.qty-minus-detail').addEventListener('click', () => {
-        removeFromCart(product.id);
-        showProductPage(productId);
-      });
-      
-      const addBtn = container.querySelector('.product-detail-add-btn');
-      if (addBtn) {
-        addBtn.addEventListener('click', () => {
-          addToCart(product.id);
-          showProductPage(productId);
-        });
-      }
-    }
-
-    function handleRouteChange() {
-      const route = getCurrentRoute();
-      
-      if (route.page === 'home') {
-        showHomePage();
-      } else if (route.page === 'category') {
-        showCategoryPage(route.name);
-      } else if (route.page === 'product') {
-        showProductPage(route.id);
-      } else {
-        showHomePage();
-      }
-    }
-
-    // ===== SHARE FUNCTION =====
-    function shareProduct(productId) {
-      // Use hash-based URL for sharing
-      const url = `${window.location.origin}${window.location.pathname}#product/${productId}`;
-      if (navigator.share) {
-        navigator.share({
-          title: 'Check out this product',
-          text: 'Check out this product on MeezoMart',
-          url: url
-        }).catch(() => {});
-      } else {
-        navigator.clipboard.writeText(url).then(() => {
-          showPopup({
-            type: 'success',
-            title: 'Link Copied!',
-            message: 'Product link copied to clipboard',
-            actions: { label: 'OK', onClick: () => {} }
-          });
-        }).catch(() => {
-          // Fallback
-          const textArea = document.createElement('textarea');
-          textArea.value = url;
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
-          showPopup({
-            type: 'success',
-            title: 'Link Copied!',
-            message: 'Product link copied to clipboard',
-            actions: { label: 'OK', onClick: () => {} }
-          });
-        });
-      }
-    }
-
-    // Expose to window
-    window.navigateTo = navigateTo;
-    window.shareProduct = shareProduct;
-    window.generateProductId = generateProductId;
 
     // ===== POPUP SYSTEM =====
     function showPopup({ type, title, message, actions = null }) {
@@ -1945,37 +1842,26 @@
     const profileDrawer = document.getElementById("profileDrawer");
     const profileDrawerCloseBtn = document.getElementById("drawerCloseBtn");
 
-    function closeAllDrawers() {
-      cartDrawerOverlay.classList.remove("open");
-      cartDrawer.classList.remove("open");
-      profileDrawerOverlay.classList.remove("open");
-      profileDrawer.classList.remove("open");
-      document.body.style.overflow = "";
-      requestAnimationFrame(() => updateStickyBar());
-    }
-
     function openCartDrawer() {
       if (profileDrawer.classList.contains("open")) {
         profileDrawerOverlay.classList.remove("open");
         profileDrawer.classList.remove("open");
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            cartDrawerOverlay.classList.add("open");
-            cartDrawer.classList.add("open");
-            document.body.style.overflow = "hidden";
-            renderCartDrawer();
-            loadDrawerOrders();
-            requestAnimationFrame(() => updateStickyBar());
-            document.querySelector('.cart-tabs button[data-tab="cartTab"]').click();
-          });
-        });
+        setTimeout(() => {
+          cartDrawerOverlay.classList.add("open");
+          cartDrawer.classList.add("open");
+          document.body.style.overflow = "hidden";
+          renderCartDrawer();
+          loadDrawerOrders();
+          updateStickyBar();
+          document.querySelector('.cart-tabs button[data-tab="cartTab"]').click();
+        }, 100);
       } else {
         cartDrawerOverlay.classList.add("open");
         cartDrawer.classList.add("open");
         document.body.style.overflow = "hidden";
         renderCartDrawer();
         loadDrawerOrders();
-        requestAnimationFrame(() => updateStickyBar());
+        updateStickyBar();
         document.querySelector('.cart-tabs button[data-tab="cartTab"]').click();
       }
     }
@@ -1984,28 +1870,26 @@
       cartDrawerOverlay.classList.remove("open");
       cartDrawer.classList.remove("open");
       document.body.style.overflow = "";
-      requestAnimationFrame(() => updateStickyBar());
+      updateStickyBar();
     }
 
     function openProfileDrawer() {
       if (cartDrawer.classList.contains("open")) {
         cartDrawerOverlay.classList.remove("open");
         cartDrawer.classList.remove("open");
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            profileDrawerOverlay.classList.add("open");
-            profileDrawer.classList.add("open");
-            document.body.style.overflow = "hidden";
-            renderDrawerContent();
-            requestAnimationFrame(() => updateStickyBar());
-          });
-        });
+        setTimeout(() => {
+          profileDrawerOverlay.classList.add("open");
+          profileDrawer.classList.add("open");
+          document.body.style.overflow = "hidden";
+          renderDrawerContent();
+          updateStickyBar();
+        }, 100);
       } else {
         profileDrawerOverlay.classList.add("open");
         profileDrawer.classList.add("open");
         document.body.style.overflow = "hidden";
         renderDrawerContent();
-        requestAnimationFrame(() => updateStickyBar());
+        updateStickyBar();
       }
     }
 
@@ -2013,18 +1897,14 @@
       profileDrawerOverlay.classList.remove("open");
       profileDrawer.classList.remove("open");
       document.body.style.overflow = "";
-      requestAnimationFrame(() => updateStickyBar());
+      updateStickyBar();
     }
 
-    cartDrawerOverlay.addEventListener("click", closeCartDrawer, { passive: true });
-    cartDrawerClose.addEventListener("click", closeCartDrawer, { passive: true });
-    profileDrawerOverlay.addEventListener("click", closeProfileDrawer, { passive: true });
-    profileDrawerCloseBtn.addEventListener("click", closeProfileDrawer, { passive: true });
-    
-    document.getElementById("profileIcon").addEventListener("click", function(e) {
-      e.stopPropagation();
-      openProfileDrawer();
-    }, { passive: false });
+    cartDrawerOverlay.addEventListener("click", closeCartDrawer);
+    cartDrawerClose.addEventListener("click", closeCartDrawer);
+    profileDrawerOverlay.addEventListener("click", closeProfileDrawer);
+    profileDrawerCloseBtn.addEventListener("click", closeProfileDrawer);
+    document.getElementById("profileIcon").addEventListener("click", openProfileDrawer);
 
     // ===== CART TAB SWITCHING =====
     document.querySelectorAll('.cart-tabs button').forEach(tab => {
@@ -2037,31 +1917,7 @@
         if (this.dataset.tab === 'ordersTab') {
           renderOrdersFromCache();
         }
-      }, { passive: true });
-    });
-
-    // ===== BACK BUTTON HANDLING =====
-    document.getElementById('backToCategoriesBtn').addEventListener('click', () => {
-      navigateTo('home');
-    });
-
-    document.getElementById('backFromDetailBtn').addEventListener('click', () => {
-      const route = getCurrentRoute();
-      if (route.page === 'product') {
-        const product = getProductFromId(route.id);
-        if (product) {
-          navigateTo('category', { name: product.category });
-        } else {
-          navigateTo('home');
-        }
-      } else {
-        navigateTo('home');
-      }
-    });
-
-    // Browser back/forward with hash changes
-    window.addEventListener('hashchange', () => {
-      handleRouteChange();
+      });
     });
 
     // ===== CHECKOUT FUNCTIONS =====
@@ -2089,8 +1945,7 @@
           this.value = "03";
           this.setSelectionRange(this.value.length, this.value.length);
         }
-      }, { passive: true });
-      
+      });
       input.addEventListener("input", function() {
         let digits = this.value.replace(/\D/g, "");
         if (digits.length > 11) digits = digits.slice(0, 11);
@@ -2103,7 +1958,7 @@
         this.value = formatted;
         savePhoneToStorageDrawer();
         updateOrderButtonDrawer();
-      }, { passive: true });
+      });
       loadPhoneFromStorageDrawer();
     }
     function savePhoneToStorageDrawer() {
@@ -2161,161 +2016,128 @@
       const tick = document.getElementById('addressTickWrapper');
       if (tick) tick.style.display = 'none';
     }
-    function updateOrderButtonDrawer() {
-      const nameInput = document.getElementById("drawerName");
-      const addressInput = document.getElementById("drawerAddress");
-      const name = nameInput ? nameInput.value.trim() : "";
-      const phone = getPhoneNumberDrawer();
-      const address = addressInput ? addressInput.value.trim() : "";
-      const btn = document.getElementById("drawerPlaceOrderBtn");
-      if (!btn) return;
-      if (name && phone.length === 11 && address) {
-        btn.classList.add("ready");
-        btn.disabled = false;
-        btn.textContent = "📦 Place Order";
-      } else {
-        btn.classList.remove("ready");
-        btn.disabled = true;
-        btn.textContent = "📦 Place Order";
-      }
-    }
 
-    function getProductImage(productName) {
-      const product = allProducts.find(p => p.name === productName);
-      if (product && product.imgIndex !== undefined) {
-        return productImages[product.imgIndex % productImages.length];
-      }
-      let hash = 0;
-      for (let i = 0; i < productName.length; i++) {
-        hash = productName.charCodeAt(i) + ((hash << 5) - hash);
-      }
-      return productImages[Math.abs(hash) % productImages.length];
-    }
+    // ===== THREE-DOT MENU =====
+    function showThreeDotMenu() {
+      const overlay = document.getElementById('popupOverlay');
+      const box = document.getElementById('popupBox');
+      const iconWrap = document.getElementById('popupIconWrap');
+      const titleEl = document.getElementById('popupTitle');
+      const msgEl = document.getElementById('popupMessage');
+      const actionsEl = document.getElementById('popupActions');
 
-    function renderCartDrawer() {
-      let itemsHtml = "";
-      let total = 0;
-      if (cart.length === 0) {
-        itemsHtml = `
-          <div style="text-align:center;padding:20px 0;">
-            <img src="${EMPTY_CART_GIF}" alt="Empty Cart" class="empty-cart-gif">
-            <div style="color:#64748b;font-size:16px;font-weight:600;">Your cart is empty</div>
-            <div style="color:#94a3b8;font-size:13px;">Add some items to get started!</div>
-          </div>
-        `;
-        cartDrawerTotal.textContent = "Rs. 0";
-      } else {
-        cart.forEach(item => {
-          total += item.price * item.qty;
-          const imgSrc = item.imgSrc || getProductImage(item.name);
-          const displayName = currentLanguage === 'ur' ? getTranslatedName(item.name) : item.name;
-          itemsHtml += `<div class="cart-drawer-item">
-            <img class="item-img" src="${imgSrc}" alt="${item.name}" loading="lazy">
-            <div class="item-info">
-              <div class="item-name">${displayName}</div>
-              <div class="item-price">${formatPKR(toPKR(item.price))}</div>
-            </div>
-            <div class="item-qty-controls">
-              <button class="cart-minus" data-id="${item.id}">−</button>
-              <span class="qty">${item.qty}</span>
-              <button class="cart-plus" data-id="${item.id}">+</button>
-            </div>
-          </div>`;
-        });
-        cartDrawerTotal.textContent = formatPKR(toPKR(total));
-      }
-      cartDrawerItems.innerHTML = itemsHtml;
-      cartDrawerItems.querySelectorAll(".cart-plus").forEach(btn => {
-        btn.addEventListener("click", () => addToCart(parseInt(btn.dataset.id)), { passive: true });
-      });
-      cartDrawerItems.querySelectorAll(".cart-minus").forEach(btn => {
-        btn.addEventListener("click", () => removeFromCart(parseInt(btn.dataset.id)), { passive: true });
-      });
+      iconWrap.style.display = 'none';
+      titleEl.textContent = '';
 
-      const checkoutBtn = document.getElementById("cartDrawerCheckout");
-      if (checkoutBtn) {
-        checkoutBtn.onclick = function() {
-          if (!currentUser) { openProfileDrawer(); return; }
-          if (cart.length === 0) { alert("Cart is empty"); return; }
-          const section = document.getElementById("drawerCheckoutSection");
-          if (section) {
-            if (section.style.display === "none") {
-              section.style.display = "block";
-              initPhoneInputDrawer();
-              loadUserDataDrawer();
-              clearAddressDrawer();
-              updateOrderButtonDrawer();
-              document.getElementById("drawerQuickLocationBtn").onclick = startQuickLocationDrawer;
-              document.getElementById("savedLocationToggle").onclick = showThreeDotMenu;
-              document.getElementById("drawerClearAddressBtn").onclick = clearAddressDrawer;
-              document.getElementById("drawerName").oninput = function() { saveUserDataDrawer(); updateOrderButtonDrawer(); };
-              document.getElementById("drawerPhoneInput").oninput = function() { savePhoneToStorageDrawer(); updateOrderButtonDrawer(); };
-              document.getElementById("drawerAddress").oninput = function() { updateOrderButtonDrawer(); };
-              document.getElementById("drawerPlaceOrderBtn").onclick = async function() {
-                if (this.disabled) { alert("Please fill in all details correctly."); return; }
-                try {
-                  const name = document.getElementById("drawerName").value.trim();
-                  const phone = getPhoneNumberDrawer();
-                  const address = document.getElementById("drawerAddress").value.trim();
-                  if (!name || phone.length !== 11 || !address) { alert("Please fill in all details correctly."); return; }
-                  saveUserDataDrawer();
-                  const itemsWithImages = cart.map(item => ({ ...item, imgSrc: getProductImage(item.name) }));
-                  let total = 0;
-                  cart.forEach(item => { total += item.price * item.qty; });
-                  await addDoc(collection(db, "orders"), {
-                    userEmail: currentUser.email,
-                    customerName: name,
-                    phone: phone,
-                    address: address,
-                    addressLabel: "Detected",
-                    items: itemsWithImages,
-                    totalBill: toPKR(total),
-                    status: "Pending",
-                    canCancel: true,
-                    orderTime: Date.now()
-                  });
-                  showPopup({
-                    type: 'success',
-                    title: 'Order Placed! 🎉',
-                    message: 'Your order has been placed successfully.',
-                    actions: {
-                      label: '📦 View My Orders',
-                      onClick: () => {
-                        closeCartDrawer();
-                        openCartDrawer();
-                        document.querySelector('.cart-tabs button[data-tab="ordersTab"]').click();
-                        setTimeout(() => {
-                          const currentTab = document.querySelector('.orders-tabs .tab-btn[data-tab="drawerCurrentTab"]');
-                          if (currentTab) { currentTab.click(); }
-                          ordersCache.loaded = false;
-                          loadDrawerOrders();
-                        }, 200);
-                      }
-                    }
-                  });
-                  cart = [];
-                  saveCartToStorage();
-                  renderCart();
-                  renderCartDrawer();
-                  clearAddressDrawer();
-                  ordersCache.loaded = false;
-                  loadDrawerOrders();
-                  renderCurrentProducts();
-                  updateStickyBar();
-                  section.style.display = "none";
-                } catch (err) {
-                  alert("Error placing order: " + err.message);
-                }
-              };
-            } else {
-              section.style.display = "none";
-            }
+      const tabsHtml = `
+        <div class="popup-tabs">
+          <button class="active" data-tab="savedLocations"> 📍Saved locations</button>
+          <button data-tab="howToOrder">📖 How to Order</button>
+        </div>
+        <div id="savedLocationsTab" class="popup-tab-content active">
+          <div id="savedLocationsContent"></div>
+        </div>
+        <div id="howToOrderTab" class="popup-tab-content">
+          <div id="howToOrderContent"></div>
+        </div>
+      `;
+      
+      msgEl.innerHTML = tabsHtml;
+      actionsEl.innerHTML = '';
+      
+      renderSavedLocationsTab();
+      renderHowToOrderTab();
+      
+      document.querySelectorAll('.popup-tabs button').forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.popup-tabs button').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          document.querySelectorAll('.popup-tab-content').forEach(c => c.classList.remove('active'));
+          const target = document.getElementById(this.dataset.tab + 'Tab');
+          if (target) target.classList.add('active');
+          if (this.dataset.tab === 'savedLocations') {
+            renderSavedLocationsTab();
           }
-        };
-      }
+        });
+      });
+      
+      overlay.classList.add('active');
     }
 
-    // ===== LOCATION FUNCTIONS =====
+    function renderSavedLocationsTab() {
+      const addresses = getSavedAddressesDrawer();
+      const container = document.getElementById('savedLocationsContent');
+      if (!container) return;
+      
+      let listHtml = '';
+      if (addresses.length === 0) {
+        listHtml = `<div class="saved-locations-empty">No saved locations yet.</div>`;
+      } else {
+        listHtml = `<div style="text-align:left;padding-right:4px;">`;
+        addresses.forEach(addr => {
+          const label = addr.label || '📍';
+          const shortAddr = addr.address.length > 40 ? addr.address.slice(0, 40) + '…' : addr.address;
+          listHtml += `
+            <div class="saved-location-item">
+              <span class="loc-label">${label}</span>
+              <span class="loc-addr" title="${addr.address}">${shortAddr}</span>
+              <button class="loc-use-btn" data-id="${addr.id}" data-addr="${addr.address}">Use</button>
+              <button class="loc-del-btn" data-id="${addr.id}">✕</button>
+            </div>
+          `;
+        });
+        listHtml += `</div>`;
+      }
+      container.innerHTML = listHtml;
+      
+      container.querySelectorAll('.loc-use-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const address = this.dataset.addr;
+          const input = document.getElementById("drawerAddress");
+          if (input && address) {
+            input.value = address;
+            updateOrderButtonDrawer();
+            const tick = document.getElementById('addressTickWrapper');
+            if (tick) {
+              tick.style.display = 'inline-flex';
+              const fill = tick.querySelector('.loc-checkmark-fill');
+              const stroke = tick.querySelector('.loc-checkmark-stroke');
+              if (fill) { fill.style.animation = 'none'; void fill.offsetHeight; fill.style.animation = 'locFillReveal 1.8s cubic-bezier(0.23, 1, 0.32, 1) forwards'; }
+              if (stroke) { stroke.style.animation = 'none'; void stroke.offsetHeight; stroke.style.animation = 'locDrawTick 1.8s cubic-bezier(0.23, 1, 0.32, 1) forwards'; }
+            }
+            closePopup();
+          }
+        });
+      });
+      container.querySelectorAll('.loc-del-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const id = parseInt(this.dataset.id);
+          if (confirm('Delete this saved location?')) {
+            deleteAddressFromStorageDrawer(id);
+            renderSavedLocationsTab();
+          }
+        });
+      });
+    }
+
+    function renderHowToOrderTab() {
+      const container = document.getElementById('howToOrderContent');
+      if (!container) return;
+      const videoId = 'pJPnooVS7Ls';
+      container.innerHTML = `
+        <div class="how-to-order-content">
+          <p style="margin-bottom:6px;">Watch this quick tutorial to learn how to place your order on MeezoMart:</p>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <p style="font-size:12px;color:#64748b;margin-top:6px;">🔊 Turn on sound for step-by-step instructions</p>
+        </div>
+      `;
+    }
+
+    // ===== LOCATION DETECTION =====
     function startQuickLocationDrawer() {
       if (!currentUser) { 
         alert("Please login first"); 
@@ -2563,127 +2385,158 @@
       }
     }
 
-    // ===== THREE-DOT MENU =====
-    function showThreeDotMenu() {
-      const overlay = document.getElementById('popupOverlay');
-      const box = document.getElementById('popupBox');
-      const iconWrap = document.getElementById('popupIconWrap');
-      const titleEl = document.getElementById('popupTitle');
-      const msgEl = document.getElementById('popupMessage');
-      const actionsEl = document.getElementById('popupActions');
-
-      iconWrap.style.display = 'none';
-      titleEl.textContent = '';
-
-      const tabsHtml = `
-        <div class="popup-tabs">
-          <button class="active" data-tab="savedLocations"> 📍Saved locations</button>
-          <button data-tab="howToOrder">📖 How to Order</button>
-        </div>
-        <div id="savedLocationsTab" class="popup-tab-content active">
-          <div id="savedLocationsContent"></div>
-        </div>
-        <div id="howToOrderTab" class="popup-tab-content">
-          <div id="howToOrderContent"></div>
-        </div>
-      `;
-      
-      msgEl.innerHTML = tabsHtml;
-      actionsEl.innerHTML = '';
-      
-      renderSavedLocationsTab();
-      renderHowToOrderTab();
-      
-      document.querySelectorAll('.popup-tabs button').forEach(tab => {
-        tab.addEventListener('click', function() {
-          document.querySelectorAll('.popup-tabs button').forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
-          
-          document.querySelectorAll('.popup-tab-content').forEach(c => c.classList.remove('active'));
-          const target = document.getElementById(this.dataset.tab + 'Tab');
-          if (target) target.classList.add('active');
-          
-          if (this.dataset.tab === 'savedLocations') {
-            renderSavedLocationsTab();
-          }
-        });
-      });
-      
-      overlay.classList.add('active');
-    }
-
-    function renderSavedLocationsTab() {
-      const addresses = getSavedAddressesDrawer();
-      const container = document.getElementById('savedLocationsContent');
-      if (!container) return;
-      
-      let listHtml = '';
-      if (addresses.length === 0) {
-        listHtml = `<div class="saved-locations-empty">No saved locations yet.</div>`;
+    function updateOrderButtonDrawer() {
+      const nameInput = document.getElementById("drawerName");
+      const addressInput = document.getElementById("drawerAddress");
+      const name = nameInput ? nameInput.value.trim() : "";
+      const phone = getPhoneNumberDrawer();
+      const address = addressInput ? addressInput.value.trim() : "";
+      const btn = document.getElementById("drawerPlaceOrderBtn");
+      if (!btn) return;
+      if (name && phone.length === 11 && address) {
+        btn.classList.add("ready");
+        btn.disabled = false;
+        btn.textContent = "📦 Place Order";
       } else {
-        listHtml = `<div style="text-align:left;padding-right:4px;">`;
-        addresses.forEach(addr => {
-          const label = addr.label || '📍';
-          const shortAddr = addr.address.length > 40 ? addr.address.slice(0, 40) + '…' : addr.address;
-          listHtml += `
-            <div class="saved-location-item">
-              <span class="loc-label">${label}</span>
-              <span class="loc-addr" title="${addr.address}">${shortAddr}</span>
-              <button class="loc-use-btn" data-id="${addr.id}" data-addr="${addr.address}">Use</button>
-              <button class="loc-del-btn" data-id="${addr.id}">✕</button>
-            </div>
-          `;
-        });
-        listHtml += `</div>`;
+        btn.classList.remove("ready");
+        btn.disabled = true;
+        btn.textContent = "📦 Place Order";
       }
-      container.innerHTML = listHtml;
-      
-      container.querySelectorAll('.loc-use-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const address = this.dataset.addr;
-          const input = document.getElementById("drawerAddress");
-          if (input && address) {
-            input.value = address;
-            updateOrderButtonDrawer();
-            const tick = document.getElementById('addressTickWrapper');
-            if (tick) {
-              tick.style.display = 'inline-flex';
-              const fill = tick.querySelector('.loc-checkmark-fill');
-              const stroke = tick.querySelector('.loc-checkmark-stroke');
-              if (fill) { fill.style.animation = 'none'; void fill.offsetHeight; fill.style.animation = 'locFillReveal 1.8s cubic-bezier(0.23, 1, 0.32, 1) forwards'; }
-              if (stroke) { stroke.style.animation = 'none'; void stroke.offsetHeight; stroke.style.animation = 'locDrawTick 1.8s cubic-bezier(0.23, 1, 0.32, 1) forwards'; }
-            }
-            closePopup();
-          }
-        });
-      });
-      container.querySelectorAll('.loc-del-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const id = parseInt(this.dataset.id);
-          if (confirm('Delete this saved location?')) {
-            deleteAddressFromStorageDrawer(id);
-            renderSavedLocationsTab();
-          }
-        });
-      });
     }
-
-    function renderHowToOrderTab() {
-      const container = document.getElementById('howToOrderContent');
-      if (!container) return;
-      
-      const videoId = 'pJPnooVS7Ls';
-      container.innerHTML = `
-        <div class="how-to-order-content">
-          <p style="margin-bottom:6px;">Watch this quick tutorial to learn how to place your order on MeezoMart:</p>
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen loading="lazy"></iframe>
+    function getProductImage(productName) {
+      const product = allProducts.find(p => p.name === productName);
+      if (product && product.imgIndex !== undefined) {
+        return productImages[product.imgIndex % productImages.length];
+      }
+      let hash = 0;
+      for (let i = 0; i < productName.length; i++) {
+        hash = productName.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return productImages[Math.abs(hash) % productImages.length];
+    }
+    function renderCartDrawer() {
+      let itemsHtml = "";
+      let total = 0;
+      if (cart.length === 0) {
+        itemsHtml = `
+          <div style="text-align:center;padding:20px 0;">
+            <img src="${EMPTY_CART_GIF}" alt="Empty Cart" class="empty-cart-gif">
+            <div style="color:#64748b;font-size:16px;font-weight:600;">Your cart is empty</div>
+            <div style="color:#94a3b8;font-size:13px;">Add some items to get started!</div>
           </div>
-          <p style="font-size:12px;color:#64748b;margin-top:6px;">🔊 Turn on sound for step-by-step instructions</p>
-        </div>
-      `;
+        `;
+        cartDrawerTotal.textContent = "Rs. 0";
+      } else {
+        cart.forEach(item => {
+          total += item.price * item.qty;
+          const imgSrc = item.imgSrc || getProductImage(item.name);
+          const displayName = currentLanguage === 'ur' ? getTranslatedName(item.name) : item.name;
+          itemsHtml += `<div class="cart-drawer-item">
+            <img class="item-img" src="${imgSrc}" alt="${item.name}" loading="lazy">
+            <div class="item-info">
+              <div class="item-name">${displayName}</div>
+              <div class="item-price">${formatPKR(toPKR(item.price))}</div>
+            </div>
+            <div class="item-qty-controls">
+              <button class="cart-minus" data-id="${item.id}">−</button>
+              <span class="qty">${item.qty}</span>
+              <button class="cart-plus" data-id="${item.id}">+</button>
+            </div>
+          </div>`;
+        });
+        cartDrawerTotal.textContent = formatPKR(toPKR(total));
+      }
+      cartDrawerItems.innerHTML = itemsHtml;
+      cartDrawerItems.querySelectorAll(".cart-plus").forEach(btn => {
+        btn.addEventListener("click", () => addToCart(parseInt(btn.dataset.id)));
+      });
+      cartDrawerItems.querySelectorAll(".cart-minus").forEach(btn => {
+        btn.addEventListener("click", () => removeFromCart(parseInt(btn.dataset.id)));
+      });
+
+      const checkoutBtn = document.getElementById("cartDrawerCheckout");
+      if (checkoutBtn) {
+        checkoutBtn.onclick = function() {
+          if (!currentUser) { openProfileDrawer(); return; }
+          if (cart.length === 0) { alert("Cart is empty"); return; }
+          const section = document.getElementById("drawerCheckoutSection");
+          if (section) {
+            if (section.style.display === "none") {
+              section.style.display = "block";
+              initPhoneInputDrawer();
+              loadUserDataDrawer();
+              clearAddressDrawer();
+              updateOrderButtonDrawer();
+              document.getElementById("drawerQuickLocationBtn").onclick = startQuickLocationDrawer;
+              document.getElementById("savedLocationToggle").onclick = showThreeDotMenu;
+              document.getElementById("drawerClearAddressBtn").onclick = clearAddressDrawer;
+              document.getElementById("drawerName").oninput = function() { saveUserDataDrawer(); updateOrderButtonDrawer(); };
+              document.getElementById("drawerPhoneInput").oninput = function() { savePhoneToStorageDrawer(); updateOrderButtonDrawer(); };
+              document.getElementById("drawerAddress").oninput = function() {
+                updateOrderButtonDrawer();
+              };
+              document.getElementById("drawerPlaceOrderBtn").onclick = async function() {
+                if (this.disabled) { alert("Please fill in all details correctly."); return; }
+                try {
+                  const name = document.getElementById("drawerName").value.trim();
+                  const phone = getPhoneNumberDrawer();
+                  const address = document.getElementById("drawerAddress").value.trim();
+                  if (!name || phone.length !== 11 || !address) { alert("Please fill in all details correctly."); return; }
+                  saveUserDataDrawer();
+                  const itemsWithImages = cart.map(item => ({ ...item, imgSrc: getProductImage(item.name) }));
+                  let total = 0;
+                  cart.forEach(item => { total += item.price * item.qty; });
+                  await addDoc(collection(db, "orders"), {
+                    userEmail: currentUser.email,
+                    customerName: name,
+                    phone: phone,
+                    address: address,
+                    addressLabel: "Detected",
+                    items: itemsWithImages,
+                    totalBill: toPKR(total),
+                    status: "Pending",
+                    canCancel: true,
+                    orderTime: Date.now()
+                  });
+                  showPopup({
+                    type: 'success',
+                    title: 'Order Placed! 🎉',
+                    message: 'Your order has been placed successfully.',
+                    actions: {
+                      label: '📦 View My Orders',
+                      onClick: () => {
+                        closeCartDrawer();
+                        openCartDrawer();
+                        document.querySelector('.cart-tabs button[data-tab="ordersTab"]').click();
+                        setTimeout(() => {
+                          const currentTab = document.querySelector('.orders-tabs .tab-btn[data-tab="drawerCurrentTab"]');
+                          if (currentTab) { currentTab.click(); }
+                          ordersCache.loaded = false;
+                          loadDrawerOrders();
+                        }, 200);
+                      }
+                    }
+                  });
+                  cart = [];
+                  saveCartToStorage();
+                  renderCart();
+                  renderCartDrawer();
+                  clearAddressDrawer();
+                  ordersCache.loaded = false;
+                  loadDrawerOrders();
+                  renderCurrentProducts();
+                  updateStickyBar();
+                  section.style.display = "none";
+                } catch (err) {
+                  alert("Error placing order: " + err.message);
+                }
+              };
+            } else {
+              section.style.display = "none";
+            }
+          }
+        };
+      }
     }
 
     // ===== ORDER FUNCTIONS =====
@@ -2704,8 +2557,6 @@
           const targetId = activeTab.dataset.tab;
           const container = document.getElementById(targetId === 'drawerCurrentTab' ? 'drawerCurrentOrders' : 'drawerHistoryOrders');
           if (container) { container.innerHTML = '<div class="card" style="text-align:center;color:#64748b;padding:30px 20px;"> Please login</div>'; }
-          const inactiveContainer = document.getElementById(targetId === 'drawerCurrentTab' ? 'drawerHistoryOrders' : 'drawerCurrentOrders');
-          if (inactiveContainer) inactiveContainer.innerHTML = "";
         }
         updateOrderBadge();
         return;
@@ -2757,8 +2608,6 @@
           const targetId = activeTab.dataset.tab;
           const container = document.getElementById(targetId === 'drawerCurrentTab' ? 'drawerCurrentOrders' : 'drawerHistoryOrders');
           if (container) { container.innerHTML = '<div class="card" style="text-align:center;color:#64748b;padding:30px 20px;">Login First ↗ </div>'; }
-          const inactiveContainer = document.getElementById(targetId === 'drawerCurrentTab' ? 'drawerHistoryOrders' : 'drawerCurrentOrders');
-          if (inactiveContainer) inactiveContainer.innerHTML = "";
         }
         updateOrderBadge();
         return;
@@ -2954,11 +2803,6 @@
     }
 
     // ===== DRAWER MENU =====
-    const drawerMenuItems = document.getElementById("drawerMenuItems");
-    const drawerUserPic = document.getElementById("drawerUserPic");
-    const drawerUserName = document.getElementById("drawerUserName");
-    const drawerUserEmail = document.getElementById("drawerUserEmail");
-
     function renderWishlistItems() {
       if (wishlist.length === 0) return '<div style="color:#94a3b8;font-size:13px;padding:6px 0;">No favorites yet ❤️</div>';
       let html = '';
@@ -2988,6 +2832,11 @@
     let wishlistVisible = false;
 
     function renderDrawerContent() {
+      const drawerUserPic = document.getElementById("drawerUserPic");
+      const drawerUserName = document.getElementById("drawerUserName");
+      const drawerUserEmail = document.getElementById("drawerUserEmail");
+      const drawerMenuItems = document.getElementById("drawerMenuItems");
+
       if (currentUser) {
         drawerUserPic.src = currentUser.photoURL || "https://ui-avatars.com/api/?name=" + encodeURIComponent(currentUser.displayName || "User") + "&background=00b14f&color=fff&size=56";
         drawerUserPic.style.display = "block";
@@ -3021,7 +2870,7 @@
               { label: 'Stay', class: 'btn-secondary', onClick: () => {} }
             ]
           });
-        }, { passive: true });
+        });
         document.getElementById("drawerOrdersNav").addEventListener("click", () => {
           closeProfileDrawer();
           openCartDrawer();
@@ -3030,7 +2879,7 @@
             const currentTab = document.querySelector('.orders-tabs .tab-btn[data-tab="drawerCurrentTab"]');
             if (currentTab) { currentTab.click(); }
           }, 100);
-        }, { passive: true });
+        });
         document.getElementById("drawerWishlistToggle").addEventListener("click", function() {
           const container = document.getElementById("wishlistItemsContainer");
           wishlistVisible = !wishlistVisible;
@@ -3038,7 +2887,7 @@
           this.querySelector(".drawer-wishlist-badge").textContent = wishlist.length;
           container.innerHTML = renderWishlistItems();
           attachWishlistEvents();
-        }, { passive: true });
+        });
         const container = document.getElementById("wishlistItemsContainer");
         wishlistVisible = false;
         container.style.display = "none";
@@ -3056,7 +2905,7 @@
           </button>
           <div style="margin-top:20px;color:#94a3b8;font-size:13px;text-align:center;">Login to access your orders & favorites</div>
         `;
-        document.getElementById("drawerLoginBtn").addEventListener("click", () => { loginGoogle(); closeProfileDrawer(); }, { passive: true });
+        document.getElementById("drawerLoginBtn").addEventListener("click", () => { loginGoogle(); closeProfileDrawer(); });
       }
     }
 
@@ -3082,7 +2931,7 @@
           addToCart(parseInt(btn.dataset.id));
         };
         btn._listener = listener;
-        btn.addEventListener("click", listener, { passive: false });
+        btn.addEventListener("click", listener);
       });
       document.querySelectorAll(".wishlist-minus").forEach(btn => {
         btn.removeEventListener("click", btn._listener);
@@ -3091,7 +2940,7 @@
           removeFromCart(parseInt(btn.dataset.id));
         };
         btn._listener = listener;
-        btn.addEventListener("click", listener, { passive: false });
+        btn.addEventListener("click", listener);
       });
       document.querySelectorAll(".remove-wishlist").forEach(btn => {
         btn.removeEventListener("click", btn._listener);
@@ -3108,7 +2957,7 @@
           }
         };
         btn._listener = listener;
-        btn.addEventListener("click", listener, { passive: false });
+        btn.addEventListener("click", listener);
       });
     }
     document.querySelectorAll('.orders-tabs .tab-btn').forEach(tab => {
@@ -3118,142 +2967,643 @@
         document.querySelectorAll('.orders-tabs .tab-content').forEach(c => c.classList.remove('active'));
         const target = document.getElementById(this.dataset.tab);
         if (target) { target.classList.add('active'); renderOrdersFromCache(); }
-      }, { passive: true });
+      });
     });
 
-    // ===== PRODUCT DATA =====
+    // ===== 3-LEVEL PRODUCT DATA =====
+    // Structure: Category → Box (Sub-Category) → Brand → Products
     const categoryData = [
-      { name: "Grocery", emoji: "", boxes: [
-        { label: "🛢️ Oil & Ghee", items: [{ name: "Sultan Ghee 1kg", price: 4.5 }, { name: "Sunflower Oil 1L", price: 3.2 }, { name: "Olive Oil 500ml", price: 5 }, { name: "Cooking Oil 3L", price: 8 }] },
-        { label: "🍬 Sugar & Gur", items: [{ name: "Sugar 1kg", price: 1.2 }, { name: "Brown Sugar 500g", price: 1.8 }, { name: "Gur 1kg", price: 2.5 }, { name: "Honey 500g", price: 4 }] },
-        { label: "🌾 Flour & Grains", items: [{ name: "White Flour 5kg", price: 3 }, { name: "Whole Wheat 5kg", price: 3.5 }, { name: "Rice Basmati 1kg", price: 2.2 }, { name: "Oats 1kg", price: 2 }] },
-        { label: "🧂 Spices", items: [{ name: "Salt 1kg", price: .8 }, { name: "Black Pepper 100g", price: 1.5 }, { name: "Turmeric 100g", price: 1 }, { name: "Cumin 100g", price: 1.2 }] }
-      ]},
-      { name: "Snacks & Drinks", emoji: "", boxes: [
-        { label: "🥤 Cold Drinks", items: [{ name: "Pepsi 1.5L", price: 1.5 }, { name: "Coca-Cola 1.5L", price: 1.5 }, { name: "Sprite 1.5L", price: 1.5 }, { name: "Mtn Dew 1.5L", price: 1.7 }] },
-        { label: "🍪 Biscuits", items: [{ name: "Oreo 200g", price: 2 }, { name: "Peek Freans 200g", price: 1.8 }, { name: "Cake Rusk 200g", price: 1.5 }, { name: "Glucose Biscuit", price: 1.2 }] },
-        { label: "🍿 Chips", items: [{ name: "Lays 60g", price: .9 }, { name: "Kurkure 60g", price: .9 }, { name: "Cheetos 60g", price: .9 }, { name: "Namkeen 200g", price: 1.2 }] },
-        { label: "☕ Tea/Coffee", items: [{ name: "Tea Bag 25ct", price: 1.8 }, { name: "Loose Tea 250g", price: 2.5 }, { name: "Coffee 100g", price: 3 }, { name: "Green Tea 20ct", price: 2.2 }] }
-      ]},
-      { name: "Beauty & Personal Care", emoji: "", boxes: [
-        { label: "🧴 Shampoo", items: [{ name: "Pantene 500ml", price: 4.5 }, { name: "Dove Conditioner", price: 4 }, { name: "Head & Shoulders", price: 5 }, { name: "Sunsilk 400ml", price: 3.5 }] },
-        { label: "🧼 Soap", items: [{ name: "Dove Soap 100g", price: 1.8 }, { name: "Lifebuoy 125g", price: 1.2 }, { name: "Lux Soap 125g", price: 1.5 }, { name: "Body Wash 500ml", price: 4 }] },
-        { label: "🪥 Oral", items: [{ name: "Colgate Toothpaste", price: 2 }, { name: "Sensodyne", price: 3 }, { name: "Toothbrush 2pk", price: 1.5 }, { name: "Mouthwash 500ml", price: 3.5 }] },
-        { label: "💄 Skincare", items: [{ name: "Face Wash 150ml", price: 3.5 }, { name: "Moisturizer 100ml", price: 4 }, { name: "Deodorant 150ml", price: 2.5 }, { name: "Sunscreen SPF50", price: 5 }] }
-      ]},
-      { name: "Household", emoji: "", boxes: [
-        { label: "🧹 Cleaning", items: [{ name: "Flooqr Cleaner 1L", price: 2.5 }, { name: "Dish Soap 500ml", price: 1.8 }, { name: "Sponge Pack", price: 1.2 }, { name: "Glass Cleaner", price: 2 }] },
-        { label: "🧻 Paper", items: [{ name: "Toilet Paper 4pk", price: 3 }, { name: "Paper Towel 2pk", price: 2.5 }, { name: "Tissue Box", price: 1.5 }, { name: "Napkins 100ct", price: 1.8 }] },
-        { label: "🧴 Laundry", items: [{ name: "Detergent 1kg", price: 4 }, { name: "Fabric Softener", price: 3 }, { name: "Stain Remover", price: 2.5 }, { name: "Bleach 1L", price: 1.8 }] },
-        { label: "🍳 Kitchen", items: [{ name: "Aluminum Foil", price: 2 }, { name: "Cling Wrap", price: 1.5 }, { name: "Ziplock Bags", price: 2.2 }, { name: "Trash Bags", price: 2.8 }] }
-      ]},
-      { name: "Baby Care", emoji: "", boxes: [
-        { label: "🍼 Formula", items: [{ name: "Baby Formula 400g", price: 12 }, { name: "Stage 2 Formula", price: 13.5 }, { name: "Organic Formula", price: 15 }] },
-        { label: "🧷 Diapers", items: [{ name: "Diapers Size 3", price: 10 }, { name: "Diapers Size 4", price: 11 }, { name: "Diapers Size 5", price: 12 }] },
-        { label: "🧴 Baby Care", items: [{ name: "Baby Lotion", price: 4.5 }, { name: "Diaper Cream", price: 3.5 }, { name: "Baby Shampoo", price: 4 }] },
-        { label: "🍼 Feeding", items: [{ name: "Bottle 250ml", price: 5 }, { name: "Sippy Cup", price: 4 }, { name: "Pacifier 2pk", price: 3 }] }
-      ]},
-      { name: "Frozen Food", emoji: "", boxes: [
-        { label: "🥦 Frozen Veg", items: [{ name: "Mixed Veg 500g", price: 2.5 }, { name: "Peas 500g", price: 2 }, { name: "Corn 500g", price: 2.2 }, { name: "Spinach 400g", price: 1.8 }] },
-        { label: "🍗 Frozen Meat", items: [{ name: "Chicken Breast 1kg", price: 6 }, { name: "Fish Fillet 500g", price: 7 }, { name: "Beef Mince 500g", price: 5.5 }] },
-        { label: "🍕 Ready Meals", items: [{ name: "Pizza 12\"", price: 8 }, { name: "Lasagna 400g", price: 6.5 }, { name: "Spring Rolls 6pk", price: 4 }] },
-        { label: "🍦 Desserts", items: [{ name: "Ice Cream 1L", price: 4.5 }, { name: "Fruit Sorbet", price: 5 }, { name: "Frozen Yogurt", price: 4 }] }
-      ]}
+      { 
+        name: "Grocery", 
+        emoji: "🛒", 
+        boxes: [
+          { 
+            label: "🛢️ Oil & Ghee", 
+            brands: [
+              { name: "Sultan", items: [
+                { name: "Sultan Ghee 1kg", price: 4.5 }
+              ]},
+              { name: "Shahbaz", items: [
+                { name: "Shahbaz Ghee 1kg", price: 4.8 }
+              ]},
+              { name: "Sufi", items: [
+                { name: "Sufi Ghee 1kg", price: 5.0 }
+              ]}
+            ]
+          },
+          { 
+            label: "🍬 Sugar & Gur", 
+            brands: [
+              { name: "White Sugar", items: [
+                { name: "Sugar 1kg", price: 1.2 }
+              ]},
+              { name: "Brown Sugar", items: [
+                { name: "Brown Sugar 500g", price: 1.8 }
+              ]},
+              { name: "Gur", items: [
+                { name: "Gur 1kg", price: 2.5 }
+              ]},
+              { name: "Honey", items: [
+                { name: "Honey 500g", price: 4 }
+              ]}
+            ]
+          },
+          { 
+            label: "🌾 Flour & Grains", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "White Flour 5kg", price: 3 },
+                { name: "Whole Wheat 5kg", price: 3.5 },
+                { name: "Rice Basmati 1kg", price: 2.2 },
+                { name: "Oats 1kg", price: 2 }
+              ]}
+            ]
+          },
+          { 
+            label: "🧂 Spices", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Salt 1kg", price: 0.8 },
+                { name: "Black Pepper 100g", price: 1.5 },
+                { name: "Turmeric 100g", price: 1 },
+                { name: "Cumin 100g", price: 1.2 }
+              ]}
+            ]
+          }
+        ]
+      },
+      { 
+        name: "Snacks & Drinks", 
+        emoji: "🥤", 
+        boxes: [
+          { 
+            label: "🥤 Cold Drinks", 
+            brands: [
+              { name: "Pepsi", items: [
+                { name: "Pepsi 1.5L", price: 1.5 }
+              ]},
+              { name: "Sprite", items: [
+                { name: "Sprite 1.5L", price: 1.5 }
+              ]},
+              { name: "Coca-Cola", items: [
+                { name: "Coca-Cola 1.5L", price: 1.5 }
+              ]}
+            ]
+          },
+          { 
+            label: "🍪 Biscuits", 
+            brands: [
+              { name: "Oreo", items: [
+                { name: "Oreo 200g", price: 2 }
+              ]},
+              { name: "Peek Freans", items: [
+                { name: "Peek Freans 200g", price: 1.8 }
+              ]},
+              { name: "Cake Rusk", items: [
+                { name: "Cake Rusk 200g", price: 1.5 }
+              ]},
+              { name: "Glucose", items: [
+                { name: "Glucose Biscuit", price: 1.2 }
+              ]}
+            ]
+          },
+          { 
+            label: "🍿 Chips", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Lays 60g", price: 0.9 },
+                { name: "Kurkure 60g", price: 0.9 },
+                { name: "Cheetos 60g", price: 0.9 },
+                { name: "Namkeen 200g", price: 1.2 }
+              ]}
+            ]
+          },
+          { 
+            label: "☕ Tea/Coffee", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Tea Bag 25ct", price: 1.8 },
+                { name: "Loose Tea 250g", price: 2.5 },
+                { name: "Coffee 100g", price: 3 },
+                { name: "Green Tea 20ct", price: 2.2 }
+              ]}
+            ]
+          }
+        ]
+      },
+      { 
+        name: "Beauty & Personal Care", 
+        emoji: "🧴", 
+        boxes: [
+          { 
+            label: "🧴 Shampoo", 
+            brands: [
+              { name: "Head & Shoulders", items: [
+                { name: "Head & Shoulders 400ml", price: 5 }
+              ]},
+              { name: "Sunsilk", items: [
+                { name: "Sunsilk 400ml", price: 3.5 }
+              ]},
+              { name: "Pantene", items: [
+                { name: "Pantene 500ml", price: 4.5 }
+              ]}
+            ]
+          },
+          { 
+            label: "🧼 Soap", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Dove Soap 100g", price: 1.8 },
+                { name: "Lifebuoy 125g", price: 1.2 },
+                { name: "Lux Soap 125g", price: 1.5 },
+                { name: "Body Wash 500ml", price: 4 }
+              ]}
+            ]
+          },
+          { 
+            label: "🪥 Oral", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Colgate Toothpaste", price: 2 },
+                { name: "Sensodyne", price: 3 },
+                { name: "Toothbrush 2pk", price: 1.5 },
+                { name: "Mouthwash 500ml", price: 3.5 }
+              ]}
+            ]
+          },
+          { 
+            label: "💄 Skincare", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Face Wash 150ml", price: 3.5 },
+                { name: "Moisturizer 100ml", price: 4 },
+                { name: "Deodorant 150ml", price: 2.5 },
+                { name: "Sunscreen SPF50", price: 5 }
+              ]}
+            ]
+          }
+        ]
+      },
+      { 
+        name: "Household", 
+        emoji: "🏠", 
+        boxes: [
+          { 
+            label: "🧹 Cleaning", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Floor Cleaner 1L", price: 2.5 },
+                { name: "Dish Soap 500ml", price: 1.8 },
+                { name: "Sponge Pack", price: 1.2 },
+                { name: "Glass Cleaner", price: 2 }
+              ]}
+            ]
+          },
+          { 
+            label: "🧻 Paper", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Toilet Paper 4pk", price: 3 },
+                { name: "Paper Towel 2pk", price: 2.5 },
+                { name: "Tissue Box", price: 1.5 },
+                { name: "Napkins 100ct", price: 1.8 }
+              ]}
+            ]
+          },
+          { 
+            label: "🧴 Laundry", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Detergent 1kg", price: 4 },
+                { name: "Fabric Softener", price: 3 },
+                { name: "Stain Remover", price: 2.5 },
+                { name: "Bleach 1L", price: 1.8 }
+              ]}
+            ]
+          },
+          { 
+            label: "🍳 Kitchen", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Aluminum Foil", price: 2 },
+                { name: "Cling Wrap", price: 1.5 },
+                { name: "Ziplock Bags", price: 2.2 },
+                { name: "Trash Bags", price: 2.8 }
+              ]}
+            ]
+          }
+        ]
+      },
+      { 
+        name: "Baby Care", 
+        emoji: "👶", 
+        boxes: [
+          { 
+            label: "🍼 Formula", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Baby Formula 400g", price: 12 },
+                { name: "Stage 2 Formula", price: 13.5 },
+                { name: "Organic Formula", price: 15 }
+              ]}
+            ]
+          },
+          { 
+            label: "🧷 Diapers", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Diapers Size 3", price: 10 },
+                { name: "Diapers Size 4", price: 11 },
+                { name: "Diapers Size 5", price: 12 }
+              ]}
+            ]
+          },
+          { 
+            label: "🧴 Baby Care", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Baby Lotion", price: 4.5 },
+                { name: "Diaper Cream", price: 3.5 },
+                { name: "Baby Shampoo", price: 4 }
+              ]}
+            ]
+          },
+          { 
+            label: "🍼 Feeding", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Bottle 250ml", price: 5 },
+                { name: "Sippy Cup", price: 4 },
+                { name: "Pacifier 2pk", price: 3 }
+              ]}
+            ]
+          }
+        ]
+      },
+      { 
+        name: "Frozen Food", 
+        emoji: "❄️", 
+        boxes: [
+          { 
+            label: "🥦 Frozen Veg", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Mixed Veg 500g", price: 2.5 },
+                { name: "Peas 500g", price: 2 },
+                { name: "Corn 500g", price: 2.2 },
+                { name: "Spinach 400g", price: 1.8 }
+              ]}
+            ]
+          },
+          { 
+            label: "🍗 Frozen Meat", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Chicken Breast 1kg", price: 6 },
+                { name: "Fish Fillet 500g", price: 7 },
+                { name: "Beef Mince 500g", price: 5.5 }
+              ]}
+            ]
+          },
+          { 
+            label: "🍕 Ready Meals", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Pizza 12\"", price: 8 },
+                { name: "Lasagna 400g", price: 6.5 },
+                { name: "Spring Rolls 6pk", price: 4 }
+              ]}
+            ]
+          },
+          { 
+            label: "🍦 Desserts", 
+            brands: [
+              { name: "All Types", items: [
+                { name: "Ice Cream 1L", price: 4.5 },
+                { name: "Fruit Sorbet", price: 5 },
+                { name: "Frozen Yogurt", price: 4 }
+              ]}
+            ]
+          }
+        ]
+      }
     ];
 
     let allProducts = [];
     let productIdCounter = 1;
     categoryData.forEach(cat => {
       cat.boxes.forEach(box => {
-        box.items.forEach((item, idx) => {
-          allProducts.push({
-            id: productIdCounter++,
-            name: item.name,
-            price: item.price,
-            category: cat.name,
-            boxLabel: box.label,
-            catEmoji: cat.emoji,
-            imgIndex: idx
+        if (box.brands) {
+          box.brands.forEach(brand => {
+            brand.items.forEach((item, idx) => {
+              allProducts.push({
+                id: productIdCounter++,
+                name: item.name,
+                price: item.price,
+                category: cat.name,
+                boxLabel: box.label,
+                brand: brand.name,
+                catEmoji: cat.emoji,
+                imgIndex: idx
+              });
+            });
           });
-        });
+        }
       });
     });
 
+    // ===== PRODUCT ID GENERATION =====
+    function generateProductId(category, name) {
+      return `${category.toLowerCase().replace(/\s+/g, '-')}-${name.toLowerCase().replace(/\s+/g, '-')}`;
+    }
+
+    function getProductFromId(productId) {
+      return allProducts.find(p => generateProductId(p.category, p.name) === productId);
+    }
+
+    // ===== ROUTING =====
+    function getCurrentRoute() {
+      const hash = window.location.hash.substring(1);
+      if (!hash || hash === '') return { page: 'home' };
+      
+      // Check for sub route: sub/Category/Box/Brand
+      if (hash.startsWith('sub/')) {
+        const parts = hash.replace('sub/', '').split('/');
+        return { 
+          page: 'sub', 
+          category: decodeURIComponent(parts[0] || ''), 
+          box: decodeURIComponent(parts[1] || ''),
+          brand: decodeURIComponent(parts[2] || '')
+        };
+      }
+      if (hash.startsWith('product/')) {
+        const productId = decodeURIComponent(hash.replace('product/', ''));
+        return { page: 'product', id: productId };
+      }
+      return { page: 'home' };
+    }
+
+    function navigateTo(page, data = {}) {
+      let hash = '';
+      if (page === 'home') hash = '';
+      else if (page === 'sub') {
+        let path = `sub/${encodeURIComponent(data.category)}`;
+        if (data.box) path += `/${encodeURIComponent(data.box)}`;
+        if (data.brand) path += `/${encodeURIComponent(data.brand)}`;
+        hash = path;
+      } else if (page === 'product') {
+        hash = `product/${encodeURIComponent(data.id)}`;
+      }
+      window.location.hash = hash;
+      handleRouteChange();
+    }
+
     // ===== RENDER FUNCTIONS =====
     function renderCategories() {
-      const container = document.getElementById("categories");
-      container.innerHTML = "";
+      const container = document.getElementById('categories');
+      container.innerHTML = '';
       categoryData.forEach(cat => {
-        const title = document.createElement("div");
-        title.className = "section-title";
+        const title = document.createElement('div');
+        title.className = 'section-title';
         const displayName = currentLanguage === 'ur' ? getTranslatedCategory(cat.name) : cat.name;
         title.textContent = `${cat.emoji} ${displayName}`;
         container.appendChild(title);
-        const grid = document.createElement("div");
-        grid.className = "category-grid";
+        const grid = document.createElement('div');
+        grid.className = 'category-grid';
         cat.boxes.forEach(box => {
-          const card = document.createElement("div");
-          card.className = "category-card";
+          const card = document.createElement('div');
+          card.className = 'category-card';
           const displayLabel = currentLanguage === 'ur' ? getTranslatedBoxLabel(box.label) : box.label;
-          card.innerHTML = `<img class="cat-img" src="${categoryImage}" alt="${box.label}" loading="lazy"><span class="cat-name">${displayLabel}</span>`;
-          card.addEventListener("click", () => navigateTo('category', { name: cat.name }), { passive: true });
+          card.innerHTML = `
+            <img class="cat-img" src="${categoryImage}" alt="${box.label}" loading="lazy">
+            <span class="cat-name">${displayLabel}</span>
+          `;
+          card.addEventListener('click', () => navigateTo('sub', { category: cat.name, box: box.label }));
           grid.appendChild(card);
         });
         container.appendChild(grid);
       });
     }
-    
-    function renderCurrentProducts() {
-      const section = document.getElementById("productsSection");
-      if (section.style.display === "block") {
-        document.querySelectorAll(".wishlist-btn").forEach(btn => {
-          const id = parseInt(btn.dataset.productId);
-          if (isInWishlist(id)) { btn.classList.add("active"); btn.textContent = "❤️"; }
-          else { btn.classList.remove("active"); btn.textContent = "🤍"; }
-        });
-        document.querySelectorAll(".qty-display").forEach(el => {
-          const id = parseInt(el.dataset.id);
-          el.textContent = getCartQty(id);
-        });
-        document.querySelectorAll(".product-card").forEach(card => {
-          const id = parseInt(card.dataset.productId);
-          const qty = getCartQty(id);
-          const btn = card.querySelector(".add-to-cart-btn");
-          const controls = card.querySelector(".qty-controls");
-          if (qty > 0) {
-            if (btn) btn.style.display = "none";
-            if (controls) { controls.classList.remove("hidden"); controls.querySelector(".qty-display").textContent = qty; }
-          } else {
-            if (btn) btn.style.display = "block";
-            if (controls) controls.classList.add("hidden");
-          }
-        });
-        document.querySelectorAll('.product-name').forEach(el => {
-          const original = el.textContent.trim();
-          if (currentLanguage === 'ur') {
-            const translated = getTranslatedName(original);
-            if (translated !== original) {
-              el.textContent = translated;
-            }
-          } else {
-            for (const [eng, urdu] of Object.entries(productTranslations)) {
-              if (original === urdu) {
-                el.textContent = eng;
-                break;
-              }
-            }
-          }
+
+    function renderSubCategoryPage(categoryName, boxLabel, brandName) {
+      const cat = categoryData.find(c => c.name === categoryName);
+      if (!cat) { showHomePage(); return; }
+      
+      // Find the box
+      let box = cat.boxes.find(b => b.label === boxLabel);
+      if (!box && cat.boxes.length > 0) {
+        box = cat.boxes[0];
+      }
+      if (!box) { showHomePage(); return; }
+
+      let brands = box.brands || [];
+      if (brands.length === 0) { showHomePage(); return; }
+
+      // If brandName is provided, find it, otherwise use first brand
+      let brand = null;
+      if (brandName) {
+        brand = brands.find(b => b.name === brandName);
+      }
+      // If brand not found or no brandName, use first brand
+      if (!brand && brands.length > 0) {
+        brand = brands[0];
+      }
+      if (!brand) { showHomePage(); return; }
+
+      document.getElementById('categories').style.display = 'none';
+      document.getElementById('productsLayout').classList.add('active');
+      document.getElementById('productDetailSection').style.display = 'none';
+
+      const catDisplay = currentLanguage === 'ur' ? getTranslatedCategory(cat.name) : cat.name;
+      const boxDisplay = currentLanguage === 'ur' ? getTranslatedBoxLabel(box.label) : box.label;
+      const brandDisplay = currentLanguage === 'ur' ? getTranslatedName(brand.name) : brand.name;
+      document.getElementById('categoryTitle').textContent = `${cat.emoji} ${catDisplay} → ${boxDisplay} → ${brandDisplay}`;
+
+      // Build sidebar - show brands as sub-categories
+      const sidebar = document.getElementById('subCategorySidebar');
+      sidebar.innerHTML = '';
+      brands.forEach(b => {
+        const div = document.createElement('div');
+        div.className = `sub-item ${b.name === brand.name ? 'active' : ''}`;
+        const bDisplay = currentLanguage === 'ur' ? getTranslatedName(b.name) : b.name;
+        div.innerHTML = `
+          <img src="${categoryImage}" alt="${b.name}" loading="lazy">
+          <span class="sub-name">${bDisplay}</span>
+        `;
+        div.addEventListener('click', () => navigateTo('sub', { category: cat.name, box: box.label, brand: b.name }));
+        sidebar.appendChild(div);
+      });
+
+      // Render products for selected brand
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+      brand.items.forEach((item, index) => {
+        const prod = allProducts.find(p => p.name === item.name && p.price === item.price);
+        if (!prod) return;
+        const qty = getCartQty(prod.id);
+        const isFav = isInWishlist(prod.id);
+        const productId = generateProductId(prod.category, prod.name);
+        const displayName = currentLanguage === 'ur' ? getTranslatedName(item.name) : item.name;
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.dataset.productId = prod.id;
+        card.innerHTML = `
+          <button class="wishlist-btn ${isFav ? 'active' : ''}" data-product-id="${prod.id}">${isFav ? '❤️' : '🤍'}</button>
+          <img class="product-img" src="${productImages[index % productImages.length]}" alt="${item.name}" loading="lazy" onclick="window.navigateTo('product', { id: '${productId}' })">
+          <div class="product-name" onclick="window.navigateTo('product', { id: '${productId}' })">${displayName}</div>
+          <div class="product-price">${formatPKR(toPKR(item.price))}</div>
+          <button class="add-to-cart-btn" data-id="${prod.id}" style="${qty > 0 ? 'display:none' : ''}">Add</button>
+          <div class="qty-controls ${qty > 0 ? '' : 'hidden'}">
+            <button class="qty-minus" data-id="${prod.id}">−</button>
+            <span class="qty-display" data-id="${prod.id}">${qty}</span>
+            <button class="qty-plus" data-id="${prod.id}">+</button>
+          </div>
+        `;
+        grid.appendChild(card);
+
+        card.querySelector('.add-to-cart-btn')?.addEventListener('click', e => { e.stopPropagation(); addToCart(prod.id); });
+        card.querySelector('.wishlist-btn').addEventListener('click', e => { e.stopPropagation(); toggleWishlist(prod.id); });
+        card.querySelector('.qty-plus').addEventListener('click', e => { e.stopPropagation(); addToCart(prod.id); });
+        card.querySelector('.qty-minus').addEventListener('click', e => { e.stopPropagation(); removeFromCart(prod.id); });
+      });
+    }
+
+    function showProductPage(productId) {
+      const product = getProductFromId(productId);
+      if (!product) { showHomePage(); return; }
+
+      document.getElementById('categories').style.display = 'none';
+      document.getElementById('productsLayout').classList.remove('active');
+      document.getElementById('productDetailSection').style.display = 'block';
+
+      const container = document.getElementById('productDetailContainer');
+      const title = document.getElementById('productDetailTitle');
+      const displayName = currentLanguage === 'ur' ? getTranslatedName(product.name) : product.name;
+      title.textContent = displayName;
+
+      const isFav = isInWishlist(product.id);
+      const qty = getCartQty(product.id);
+      const imgSrc = productImages[product.imgIndex % productImages.length];
+      const productIdUrl = generateProductId(product.category, product.name);
+      const catDisplay = currentLanguage === 'ur' ? getTranslatedCategory(product.category) : product.category;
+      const boxDisplay = currentLanguage === 'ur' ? getTranslatedBoxLabel(product.boxLabel) : product.boxLabel;
+
+      container.innerHTML = `
+        <div style="text-align:center;padding:8px 0 16px;">
+          <img class="product-detail-img" src="${imgSrc}" alt="${product.name}" loading="lazy">
+          <h2 class="product-detail-name">${displayName}</h2>
+          <p class="product-detail-meta">${catDisplay} · ${boxDisplay}</p>
+          <div class="product-detail-price">${formatPKR(toPKR(product.price))}</div>
+          <div class="product-detail-actions">
+            <button class="product-detail-wishlist ${isFav ? 'active' : ''}" data-product-id="${product.id}">${isFav ? '❤️' : '🤍'}</button>
+            <div class="product-detail-qty">
+              <button class="qty-minus-detail" data-id="${product.id}">−</button>
+              <span class="qty-display-detail">${qty}</span>
+              <button class="qty-plus-detail" data-id="${product.id}">+</button>
+            </div>
+            <button class="product-detail-add-btn" data-id="${product.id}" style="display:${qty > 0 ? 'none' : 'block'}">Add to Cart</button>
+            <button class="share-btn" onclick="window.shareProduct('${productIdUrl}')">📤 Share Product</button>
+          </div>
+        </div>
+      `;
+
+      container.querySelector('.product-detail-wishlist').addEventListener('click', () => { toggleWishlist(product.id); showProductPage(productId); });
+      container.querySelector('.qty-plus-detail').addEventListener('click', () => { addToCart(product.id); showProductPage(productId); });
+      container.querySelector('.qty-minus-detail').addEventListener('click', () => { removeFromCart(product.id); showProductPage(productId); });
+      container.querySelector('.product-detail-add-btn')?.addEventListener('click', () => { addToCart(product.id); showProductPage(productId); });
+    }
+
+    function showHomePage() {
+      document.getElementById('categories').style.display = 'block';
+      document.getElementById('productsLayout').classList.remove('active');
+      document.getElementById('productDetailSection').style.display = 'none';
+      renderCategories();
+    }
+
+    function handleRouteChange() {
+      const route = getCurrentRoute();
+      if (route.page === 'home') showHomePage();
+      else if (route.page === 'sub') {
+        renderSubCategoryPage(route.category, route.box, route.brand);
+      } else if (route.page === 'product') {
+        showProductPage(route.id);
+      } else {
+        showHomePage();
+      }
+    }
+
+    function shareProduct(productId) {
+      const url = `${window.location.origin}${window.location.pathname}#product/${productId}`;
+      if (navigator.share) {
+        navigator.share({ title: 'Check out this product', text: 'Check out this product on MeezoMart', url: url }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          showPopup({ type: 'success', title: 'Link Copied!', message: 'Product link copied to clipboard', actions: { label: 'OK', onClick: () => {} } });
+        }).catch(() => {
+          const textArea = document.createElement('textarea');
+          textArea.value = url;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          showPopup({ type: 'success', title: 'Link Copied!', message: 'Product link copied to clipboard', actions: { label: 'OK', onClick: () => {} } });
         });
       }
     }
-    
+
+    window.navigateTo = navigateTo;
+    window.shareProduct = shareProduct;
+
+    // ===== RENDER CURRENT PRODUCTS =====
+    function renderCurrentProducts() {
+      const route = getCurrentRoute();
+      if (route.page === 'sub') renderSubCategoryPage(route.category, route.box, route.brand);
+      else if (route.page === 'product') showProductPage(route.id);
+      // Update wishlist buttons
+      document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        const id = parseInt(btn.dataset.productId);
+        if (isInWishlist(id)) { btn.classList.add('active'); btn.textContent = '❤️'; }
+        else { btn.classList.remove('active'); btn.textContent = '🤍'; }
+      });
+      // Update qty displays
+      document.querySelectorAll('.qty-display, .qty-display-detail').forEach(el => {
+        const id = parseInt(el.dataset.id);
+        if (!isNaN(id)) el.textContent = getCartQty(id);
+      });
+      document.querySelectorAll('.product-card').forEach(card => {
+        const id = parseInt(card.dataset.productId);
+        const qty = getCartQty(id);
+        const btn = card.querySelector('.add-to-cart-btn');
+        const controls = card.querySelector('.qty-controls');
+        if (qty > 0) { if (btn) btn.style.display = 'none'; if (controls) { controls.classList.remove('hidden'); controls.querySelector('.qty-display').textContent = qty; } }
+        else { if (btn) btn.style.display = 'block'; if (controls) controls.classList.add('hidden'); }
+      });
+      // Update product detail
+      const detailAddBtn = document.querySelector('.product-detail-add-btn');
+      const detailQtyDisplay = document.querySelector('.qty-display-detail');
+      if (detailAddBtn && detailQtyDisplay) {
+        const id = parseInt(detailAddBtn.dataset.id);
+        const qty = getCartQty(id);
+        detailQtyDisplay.textContent = qty;
+        detailAddBtn.style.display = qty > 0 ? 'none' : 'block';
+      }
+    }
+
     function renderCart() {}
 
+    // ===== BACK BUTTONS =====
+    document.getElementById('backToCategoriesBtn').addEventListener('click', () => navigateTo('home'));
+    document.getElementById('backFromDetailBtn').addEventListener('click', () => {
+      const route = getCurrentRoute();
+      if (route.page === 'product') {
+        const product = getProductFromId(route.id);
+        if (product) navigateTo('sub', { category: product.category, box: product.boxLabel });
+        else navigateTo('home');
+      } else navigateTo('home');
+    });
+
     // ===== SEARCH =====
-    const searchInput = document.getElementById("searchInput");
-    const placeholder = document.getElementById("searchPlaceholder");
-    const searchIcon = document.getElementById("searchIcon");
-    const micIcon = document.getElementById("micIcon");
+    const searchInput = document.getElementById('searchInput');
 
     function performSearch(query) {
       const searchTerm = query.toLowerCase().trim();
@@ -3261,231 +3611,51 @@
         navigateTo('home');
         return;
       }
-      
       const results = allProducts.filter(p => {
-        const englishName = p.name.toLowerCase();
-        const urduName = getTranslatedName(p.name).toLowerCase();
-        return englishName.includes(searchTerm) || 
-               urduName.includes(searchTerm) ||
-               Object.values(productTranslations).some(urdu => 
-                 urdu.toLowerCase().includes(searchTerm)
-               );
+        const name = p.name.toLowerCase();
+        const translated = getTranslatedName(p.name).toLowerCase();
+        return name.includes(searchTerm) || translated.includes(searchTerm);
       });
       
-      document.getElementById('categories').style.display = 'none';
-      document.getElementById('productsSection').style.display = 'block';
-      document.getElementById('productDetailSection').style.display = 'none';
-      
-      const resultCount = results.length;
-      document.getElementById('categoryTitle').textContent = resultCount > 0 ? 
-        (currentLanguage === 'ur' ? `نتائج (${resultCount})` : `Results (${resultCount})`) : 
-        (currentLanguage === 'ur' ? 'کوئی نتیجہ نہیں' : 'No results');
-      const productContainer = document.getElementById('products');
-      productContainer.innerHTML = '';
-      if (resultCount === 0) {
-        productContainer.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;color:#64748b;">' + 
-          (currentLanguage === 'ur' ? 'کوئی مصنوعات نہیں ملی' : 'No products found') + '</div>';
+      if (results.length === 0) {
+        showHomePage();
         return;
       }
-      results.forEach((prod, index) => {
-        const qty = getCartQty(prod.id);
-        const isFav = isInWishlist(prod.id);
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.dataset.productId = prod.id;
-        const hasQty = qty > 0;
-        const imgSrc = productImages[index % productImages.length];
-        const displayName = currentLanguage === 'ur' ? getTranslatedName(prod.name) : prod.name;
-        const productId = generateProductId(prod.category, prod.name);
-        card.innerHTML = `
-          <button class="wishlist-btn ${isFav ? 'active' : ''}" data-product-id="${prod.id}">${isFav ? '❤️' : '🤍'}</button>
-          <img class="product-img" src="${imgSrc}" alt="${prod.name}" loading="lazy" onclick="window.navigateTo('product', { id: '${productId}' })">
-          <div class="product-name" onclick="window.navigateTo('product', { id: '${productId}' })">${displayName}</div>
-          <div class="product-price">${formatPKR(toPKR(prod.price))}</div>
-          <button class="add-to-cart-btn" data-id="${prod.id}" style="${hasQty ? 'display:none' : ''}">Add to Cart</button>
-          <div class="qty-controls ${hasQty ? '' : 'hidden'}">
-            <button class="qty-minus" data-id="${prod.id}">−</button>
-            <span class="qty-display" data-id="${prod.id}">${qty}</span>
-            <button class="qty-plus" data-id="${prod.id}">+</button>
-          </div>
-        `;
-        productContainer.appendChild(card);
-        const atcBtn = card.querySelector('.add-to-cart-btn');
-        if (atcBtn) { atcBtn.addEventListener('click', e => { e.stopPropagation(); addToCart(prod.id); }, { passive: false }); }
-        card.querySelector('.wishlist-btn').addEventListener('click', e => { e.stopPropagation(); toggleWishlist(prod.id); }, { passive: false });
-        card.querySelector('.qty-plus').addEventListener('click', e => { e.stopPropagation(); addToCart(prod.id); }, { passive: false });
-        card.querySelector('.qty-minus').addEventListener('click', e => { e.stopPropagation(); removeFromCart(prod.id); }, { passive: false });
-      });
+      
+      const first = results[0];
+      navigateTo('sub', { category: first.category, box: first.boxLabel });
     }
 
     searchInput.addEventListener('input', function(e) {
       performSearch(this.value);
-    }, { passive: true });
+    });
 
-    // ===== VOICE SEARCH =====
-    let isListening = false;
-    let recognition = null;
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (SpeechRecognition) {
-      recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = true;
-      recognition.lang = currentLanguage === 'ur' ? 'ur-PK' : 'en-US';
-
-      recognition.onresult = (event) => {
-        let finalTranscript = '';
-        let interimTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            finalTranscript += transcript;
-          } else {
-            interimTranscript += transcript;
-          }
-        }
-        if (finalTranscript) {
-          let searchText = finalTranscript.trim();
-          if (currentLanguage === 'ur') {
-            const englishName = getEnglishName(searchText);
-            if (englishName !== searchText) {
-              searchText = englishName;
-            }
-          }
-          searchInput.value = searchText;
-          performSearch(searchText);
-          if (isListening) {
-            try { recognition.stop(); } catch(e) {}
-          }
-        } else if (interimTranscript) {
-          searchInput.value = interimTranscript.trim();
-        }
-      };
-
-      recognition.onend = () => {
-        isListening = false;
-        micIcon.classList.remove('listening');
-        if (!searchInput.value && document.activeElement !== searchInput) {
-          micIcon.style.display = 'none';
-          searchIcon.style.display = 'block';
-        } else if (searchInput.value) {
-          micIcon.style.display = 'none';
-          searchIcon.style.display = 'block';
-        } else {
-          micIcon.style.display = 'block';
-          searchIcon.style.display = 'none';
-        }
-      };
-
-      recognition.onerror = (event) => {
-        isListening = false;
-        micIcon.classList.remove('listening');
-        if (!searchInput.value && document.activeElement !== searchInput) {
-          micIcon.style.display = 'none';
-          searchIcon.style.display = 'block';
-        } else if (searchInput.value) {
-          micIcon.style.display = 'none';
-          searchIcon.style.display = 'block';
-        } else {
-          micIcon.style.display = 'block';
-          searchIcon.style.display = 'none';
-        }
-        if (event.error !== 'not-allowed' && event.error !== 'aborted') {
-          searchInput.placeholder = currentLanguage === 'ur' ? 'دوبارہ کوشش کریں...' : 'Try again...';
-          setTimeout(() => {
-            if (!searchInput.value) {
-              searchInput.placeholder = '';
-            }
-          }, 2000);
-        }
-      };
+    // ===== LANGUAGE TOGGLE =====
+    function getSavedLanguage() {
+      return localStorage.getItem(LANG_STORAGE_KEY) || 'en';
     }
 
-    function updateRecognitionLanguage() {
-      if (recognition) {
-        recognition.lang = currentLanguage === 'ur' ? 'ur-PK' : 'en-US';
-      }
+    function saveLanguage(lang) {
+      localStorage.setItem(LANG_STORAGE_KEY, lang);
     }
 
-    searchIcon.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!recognition) {
-        alert(currentLanguage === 'ur' ? 'آواز کی تلاش آپ کے براؤزر میں تعاون یافتہ نہیں ہے۔' : 'Voice search not supported.');
-        return;
-      }
-      updateRecognitionLanguage();
-      searchIcon.style.display = 'none';
-      micIcon.style.display = 'block';
-      micIcon.classList.remove('listening');
-      setTimeout(() => {
-        try {
-          recognition.start();
-          isListening = true;
-          micIcon.classList.add('listening');
-          searchInput.focus();
-        } catch (err) {
-          micIcon.style.display = 'none';
-          searchIcon.style.display = 'block';
-          isListening = false;
-          micIcon.classList.remove('listening');
-        }
-      }, 150);
-    });
+    function applyLanguagePreference() {
+      const savedLang = getSavedLanguage();
+      const toggle = document.getElementById('langToggle');
+      if (!toggle) return;
+      currentLanguage = savedLang;
+      toggle.checked = (savedLang === 'ur');
+      renderCategories();
+      renderCartDrawer();
+      renderDrawerContent();
+      renderCurrentProducts();
+    }
 
-    micIcon.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!recognition) {
-        alert(currentLanguage === 'ur' ? 'آواز کی تلاش آپ کے براؤزر میں تعاون یافتہ نہیں ہے۔' : 'Voice search not supported.');
-        return;
-      }
-      if (isListening) {
-        try { recognition.stop(); } catch(e) {}
-        isListening = false;
-        micIcon.classList.remove('listening');
-        if (!searchInput.value) {
-          micIcon.style.display = 'block';
-          searchIcon.style.display = 'none';
-        } else {
-          micIcon.style.display = 'none';
-          searchIcon.style.display = 'block';
-        }
-        return;
-      }
-      updateRecognitionLanguage();
-      try {
-        recognition.start();
-        isListening = true;
-        micIcon.classList.add('listening');
-        searchInput.focus();
-      } catch (err) {
-        isListening = false;
-        micIcon.classList.remove('listening');
-      }
-    });
-
-    searchInput.addEventListener('focus', () => {
-      placeholder.style.opacity = '0';
-      if (!searchInput.value && !isListening && recognition) {
-        searchIcon.style.display = 'none';
-        micIcon.style.display = 'block';
-        micIcon.classList.remove('listening');
-      }
-    });
-
-    searchInput.addEventListener('blur', () => {
-      if (searchInput.value === '') {
-        placeholder.style.opacity = '1';
-        if (!isListening) {
-          searchIcon.style.display = 'block';
-          micIcon.style.display = 'none';
-        } else {
-          micIcon.style.display = 'block';
-          searchIcon.style.display = 'none';
-        }
-      } else {
-        searchIcon.style.display = 'block';
-        micIcon.style.display = 'none';
-      }
+    document.getElementById('langToggle').addEventListener('change', function(e) {
+      const targetLang = this.checked ? 'ur' : 'en';
+      currentLanguage = targetLang;
+      saveLanguage(targetLang);
+      applyLanguagePreference();
     });
 
     // ===== AUTHENTICATION =====
@@ -3522,7 +3692,7 @@
         loadWishlist();
         document.getElementById("customerArea").style.display = "block";
         renderCategories();
-        document.getElementById("productsSection").style.display = "none";
+        document.getElementById("productsLayout").classList.remove('active');
         document.getElementById("categories").style.display = "block";
         updateProfileDisplay(user);
         renderDrawerContent();
@@ -3532,13 +3702,12 @@
         ordersCache.loaded = false;
         loadDrawerOrders();
         applyLanguagePreference();
-        // Handle initial route after login
         setTimeout(() => handleRouteChange(), 100);
       } else {
         currentUser = null;
         wishlist = [];
         renderCategories();
-        document.getElementById("productsSection").style.display = "none";
+        document.getElementById("productsLayout").classList.remove('active');
         document.getElementById("categories").style.display = "block";
         cart = [];
         saveCartToStorage();
@@ -3553,63 +3722,8 @@
         ordersCache.history = [];
         updateOrderBadge();
         applyLanguagePreference();
-        // Handle initial route after logout
         setTimeout(() => handleRouteChange(), 100);
       }
-    });
-
-    // ===== LANGUAGE TOGGLE =====
-    function getSavedLanguage() {
-      return localStorage.getItem(LANG_STORAGE_KEY) || 'en';
-    }
-
-    function saveLanguage(lang) {
-      localStorage.setItem(LANG_STORAGE_KEY, lang);
-    }
-
-    function applyLanguagePreference() {
-      const savedLang = getSavedLanguage();
-      const toggle = document.getElementById('langToggle');
-      if (!toggle) return;
-      currentLanguage = savedLang;
-      toggle.checked = (savedLang === 'ur');
-      
-      updateRecognitionLanguage();
-      
-      renderCategories();
-      renderCartDrawer();
-      renderCurrentProducts();
-      renderDrawerContent();
-      updateSearchPlaceholder();
-    }
-
-    function updateSearchPlaceholder() {
-      const wrapper = document.querySelector('.search-placeholder .text-wrapper');
-      if (!wrapper) return;
-      if (currentLanguage === 'ur') {
-        wrapper.innerHTML = `
-          <span class="text-item">آٹا اور اناج🌾</span>
-          <span class="text-item">صابن🧼</span>
-          <span class="text-item">منہ کی صفائی🪥</span>
-          <span class="text-item">شیمپو🧴</span>
-        `;
-      } else {
-        wrapper.innerHTML = `
-          <span class="text-item">Flour & Grains🌾</span>
-          <span class="text-item">Soap🧼</span>
-          <span class="text-item">Oral🪥</span>
-          <span class="text-item">shampoo🧴</span>
-        `;
-      }
-    }
-
-    document.getElementById('langToggle').addEventListener('change', function(e) {
-      const targetLang = this.checked ? 'ur' : 'en';
-      currentLanguage = targetLang;
-      saveLanguage(targetLang);
-      updateRecognitionLanguage();
-      applyLanguagePreference();
-      window.location.reload();
     });
 
     // ===== INIT =====
@@ -3620,24 +3734,19 @@
     const toggle = document.getElementById('langToggle');
     if (toggle) toggle.checked = (currentLanguage === 'ur');
     
-    if (recognition) {
-      updateRecognitionLanguage();
-    }
-    
     renderCategories();
     renderCart();
     renderCartDrawer();
-    document.getElementById("productsSection").style.display = "none";
+    document.getElementById("productsLayout").classList.remove('active');
     document.getElementById("categories").style.display = "block";
     updateStickyBar();
     updateOrderBadge();
-    updateSearchPlaceholder();
     
-    // Handle initial route from hash
     setTimeout(() => handleRouteChange(), 100);
-    
-    console.log("✅ MeezoMart Loaded with Hash-based Routing — Shareable product links!");
-    console.log("📱 Share URLs like: " + window.location.origin + window.location.pathname + "#product/grocery-sunflower-oil-1l");
+    window.addEventListener('hashchange', handleRouteChange);
+
+    console.log("✅ MeezoMart Loaded — Fixed 3-Level Navigation!");
+    console.log("📱 Share URLs like: " + window.location.origin + window.location.pathname + "#product/grocery-sultan-ghee-1kg");
   </script>
 </body>
 </html>
